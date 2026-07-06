@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Izakaya — Меню</title>
+  <meta name="description" content="Izakaya — японский бар. Меню: саке, японский виски, коктейли, вино и напитки." />
+  <meta name="theme-color" content="#0a0a0f" />
+  <meta property="og:title" content="Izakaya — Меню" />
+  <meta property="og:description" content="Японский бар. Саке, японский виски, коктейли, вино и напитки." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏮</text></svg>" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -195,7 +201,7 @@
 
     /* ── CART FAB ── */
     .cart-fab {
-      position: fixed; bottom: 24px; right: 20px; z-index: 200;
+      position: fixed; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); right: 20px; z-index: 200;
       background: var(--red); border: none;
       border-radius: 50px; padding: 0 20px 0 16px; height: 52px;
       display: none; align-items: center; gap: 10px;
@@ -227,6 +233,7 @@
       max-height: 80vh; display: flex; flex-direction: column;
       transform: translateY(100%);
       transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
+      padding-bottom: env(safe-area-inset-bottom, 0);
     }
     .cart-drawer.open { transform: translateY(0); }
 
@@ -276,6 +283,17 @@
     }
     .cart-total-label { font-size: 14px; color: var(--text2); }
     .cart-total-amount { font-size: 22px; font-weight: 700; color: var(--gold); }
+    .cart-send {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; margin-top: 14px;
+      background: #25d366; border: none; border-radius: 14px;
+      padding: 14px; font-size: 15px; font-weight: 700; color: #fff;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.35);
+      transition: transform 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cart-send:active { transform: scale(0.97); }
 
     @media (min-width: 640px) {
       .cart-drawer { max-width: 480px; left: 50%; transform: translateX(-50%) translateY(100%); right: auto; border-radius: 20px 20px 0 0; }
@@ -355,6 +373,10 @@
       <span class="cart-total-label">Итого</span>
       <span class="cart-total-amount" id="cartTotalAmount">0 тг</span>
     </div>
+    <button class="cart-send" onclick="sendToWhatsApp()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span>Отправить заказ в WhatsApp</span>
+    </button>
   </div>
 </div>
 
@@ -370,10 +392,10 @@ const menuData = [
     items: [
       { name: 'Villa Antinori Toscana Rosso', name_kz: 'Villa Antinori Toscana Rosso', name_en: 'Villa Antinori Toscana Rosso', desc: 'красное сухое', price: 32990 },
       { name: 'Villa Antinori Toscana Bianco', name_kz: 'Villa Antinori Toscana Bianco', name_en: 'Villa Antinori Toscana Bianco', desc: 'белое сухое', price: 19900 },
-      { name: 'Santa Cristina Chianti', name_kz: 'Santa Cristina Chianti', name_en: 'Santa Cristina Chianti', desc: 'белое сухое', price: 19890 },
+      { name: 'Santa Cristina Chianti', name_kz: 'Santa Cristina Chianti', name_en: 'Santa Cristina Chianti', desc: 'красное сухое', price: 19890 },
       { name: 'Santa Cristina Giardino Rosata', name_kz: 'Santa Cristina Giardino Rosata', name_en: 'Santa Cristina Giardino Rosata', desc: 'розовое сухое', price: 19890 },
-      { name: 'Don Simon Sauvingnon Blanc', name_kz: 'Don Simon Sauvingnon Blanc', name_en: 'Don Simon Sauvingnon Blanc', desc: 'белое сухое', price: 7590 },
-      { name: 'Don Simon Cabernet Sauvingnon', name_kz: 'Don Simon Cabernet Sauvingnon', name_en: 'Don Simon Cabernet Sauvingnon', desc: 'красное сухое', price: 7590 },
+      { name: 'Don Simon Sauvignon Blanc', name_kz: 'Don Simon Sauvignon Blanc', name_en: 'Don Simon Sauvignon Blanc', desc: 'белое сухое', price: 7590 },
+      { name: 'Don Simon Cabernet Sauvignon', name_kz: 'Don Simon Cabernet Sauvignon', name_en: 'Don Simon Cabernet Sauvignon', desc: 'красное сухое', price: 7590 },
       { name: "Jacob's Creek Classic Chardonnay", name_kz: "Jacob's Creek Classic Chardonnay", name_en: "Jacob's Creek Classic Chardonnay", desc: 'белое сухое', price: 11990 },
       { name: "Jacob's Creek Shiraz Cabernet", name_kz: "Jacob's Creek Shiraz Cabernet", name_en: "Jacob's Creek Shiraz Cabernet", desc: 'красное сухое', price: 11990 },
     ]
@@ -395,11 +417,11 @@ const menuData = [
     subtitle: '750ml',
     items: [
       { name: 'Martini Asti', name_kz: 'Martini Asti', name_en: 'Martini Asti', price: 15790 },
-      { name: 'Martini Prosseco', name_kz: 'Martini Prosseco', name_en: 'Martini Prosseco', price: 15790 },
+      { name: 'Martini Prosecco', name_kz: 'Martini Prosecco', name_en: 'Martini Prosecco', price: 15790 },
       { name: 'Abrau Durso', name_kz: 'Abrau Durso', name_en: 'Abrau Durso', price: 7490 },
       { name: "Jacob's Creek Sparkling Moscato", name_kz: "Jacob's Creek Sparkling Moscato", name_en: "Jacob's Creek Sparkling Moscato", price: 13290 },
       { name: 'Campo Viejo Cava Brut Reserva', name_kz: 'Campo Viejo Cava Brut Reserva', name_en: 'Campo Viejo Cava Brut Reserva', price: 14790 },
-      { name: 'Moёt Chandon', name_kz: 'Moёt Chandon', name_en: 'Moёt Chandon', price: 68990 },
+      { name: 'Moët & Chandon', name_kz: 'Moët & Chandon', name_en: 'Moët & Chandon', price: 68990 },
     ]
   },
   {
@@ -407,7 +429,7 @@ const menuData = [
     name: 'Пиво бутылочное', name_kz: 'Бөтелке сыра', name_en: 'Bottled beer',
     subtitle: '330ml',
     items: [
-      { name: 'Peroni Nastro Azzuro', price: 2190 },
+      { name: 'Peroni Nastro Azzurro', price: 2190 },
       { name: 'Corona Extra', price: 2990 },
       { name: 'Tsingtao', price: 2190 },
       { name: 'Tsingtao Alcohol Free', name_kz: 'Tsingtao Alcohol Free', name_en: 'Tsingtao Alcohol Free', desc: 'безалкогольное', price: 2190 },
@@ -426,7 +448,7 @@ const menuData = [
       { name: 'Гавайи', name_kz: 'Гавайи', name_en: 'Hawaii', price: 1790 },
       { name: 'Мохито Энерджи', name_kz: 'Мохито Энерджи', name_en: 'Mojito Energy', price: 1990 },
       { name: 'Raspberry Sunrise', price: 1290 },
-      { name: 'Tropical Paradice', price: 1090 },
+      { name: 'Tropical Paradise', price: 1090 },
       { name: 'Purple Rain', price: 1490 },
       { name: 'Izakaya', price: 1390 },
       { name: 'Мохито', name_kz: 'Мохито', name_en: 'Mojito', price: 1490 },
@@ -437,7 +459,7 @@ const menuData = [
     id: 'cocktails',
     name: 'Алкогольные коктейли', name_kz: 'Алкогольдік коктейлдер', name_en: 'Alcoholic cocktails',
     items: [
-      { name: 'Aperoll Spritz', price: 3290 },
+      { name: 'Aperol Spritz', price: 3290 },
       { name: 'Cosmopolitan', price: 2090 },
       { name: 'Gin Fizz Twist', price: 2390 },
       { name: 'Gin Tonik', name_kz: 'Джин Тоник', name_en: 'Gin Tonic', price: 2390 },
@@ -446,13 +468,13 @@ const menuData = [
       { name: 'Mai Tai', price: 1990 },
       { name: 'Margarita', price: 2190 },
       { name: 'Negroni', price: 2290 },
-      { name: 'Pink Strawbery Sour', price: 2090 },
+      { name: 'Pink Strawberry Sour', price: 2090 },
       { name: 'Sex on the Beach', price: 1390 },
       { name: 'Tequila Sunrise', price: 1890 },
       { name: 'Whiskey Sour', price: 2290 },
       { name: 'Голубая Лагуна', name_kz: 'Көк Лагуна', name_en: 'Blue Lagoon', price: 2490 },
       { name: 'Bacardi Daiquiri', price: 1490 },
-      { name: 'Bacardi Mochito', price: 1590 },
+      { name: 'Bacardi Mojito', price: 1590 },
       { name: 'Bombay Tonic', price: 2490 },
       { name: 'Martini Fiero & Tonic', price: 2790 },
       { name: 'Highball', price: 2690 },
@@ -464,7 +486,7 @@ const menuData = [
     items: [
       { name: 'B-52', price: 2290 },
       { name: 'B-53', price: 2490 },
-      { name: 'Hirosima', price: 2290 },
+      { name: 'Hiroshima', price: 2290 },
       { name: 'Горящий Ламборгини', name_kz: 'Жанып тұрған Ламборгини', name_en: 'Burning Lamborghini', price: 3790 },
       { name: 'Медуза', name_kz: 'Медуза', name_en: 'Medusa', price: 1790 },
       { name: 'Опухоль Мозга', name_kz: 'Ми ісігі', name_en: 'Brain Hemorrhage', price: 1790 },
@@ -543,8 +565,8 @@ const menuData = [
     name: 'Французский коньяк', name_kz: 'Француз коньягы', name_en: 'French Cognac',
     subtitle: '50ml',
     items: [
-      { name: 'Hennesy V.S', price: 3790 },
-      { name: 'Hennesy V.S.O.P', price: 5390 },
+      { name: 'Hennessy V.S', price: 3790 },
+      { name: 'Hennessy V.S.O.P', price: 5390 },
       { name: 'Martell V.S.', price: 2990 },
       { name: 'Martell V.S.O.P', price: 4490 },
     ]
@@ -554,10 +576,10 @@ const menuData = [
     name: 'Армянский коньяк', name_kz: 'Армян коньягы', name_en: 'Armenian Cognac',
     subtitle: '50ml',
     items: [
-      { name: 'Apapat 5Y.O.', price: 1790 },
-      { name: 'Apapat Apricot', price: 1990 },
-      { name: 'Apapat Cherry', price: 1790 },
-      { name: 'Apapat Axtamap 10Y.O.', price: 2190 },
+      { name: 'Ararat 5Y.O.', price: 1790 },
+      { name: 'Ararat Apricot', price: 1990 },
+      { name: 'Ararat Cherry', price: 1790 },
+      { name: 'Ararat Akhtamar 10Y.O.', price: 2190 },
     ]
   },
   {
@@ -633,7 +655,7 @@ const menuData = [
       { name: 'Cointreau', price: 1990 },
       { name: 'Peachtree', price: 1990 },
       { name: 'Blue Curacao', price: 1990 },
-      { name: 'Aperoll', price: 2390 },
+      { name: 'Aperol', price: 2390 },
       { name: 'Campari', price: 2190 },
     ]
   },
@@ -645,7 +667,7 @@ const menuData = [
       { name: 'Beefeater', price: 1790 },
       { name: 'Beefeater Pink Strawberry', price: 2190 },
       { name: 'Beefeater Blackberry', price: 1790 },
-      { name: 'Bombay Saphire', price: 1990 },
+      { name: 'Bombay Sapphire', price: 1990 },
     ]
   },
   {
@@ -673,14 +695,13 @@ const menuData = [
     items: [
       { name: 'Double Espresso', price: 990 },
       { name: 'Americano', price: 990 },
-      { name: 'Capuchino', name_kz: 'Капучино', name_en: 'Cappuccino', price: 1050 },
+      { name: 'Cappuccino', name_kz: 'Капучино', name_en: 'Cappuccino', price: 1050 },
       { name: 'Flat White', price: 1050 },
       { name: 'Latte', name_kz: 'Латте', name_en: 'Latte', price: 1050 },
       { name: 'Raf', price: 1790 },
-      { name: 'Frapuchino', name_kz: 'Фраппучино', name_en: 'Frappuccino', price: 1690 },
-      { name: 'Glasse', name_kz: 'Гляссе', name_en: 'Glasse', price: 1590 },
+      { name: 'Frappuccino', name_kz: 'Фраппучино', name_en: 'Frappuccino', price: 1690 },
+      { name: 'Гляссе', name_kz: 'Гляссе', name_en: 'Glacé', price: 1590 },
       { name: 'Espresso', price: 700 },
-      { name: 'Гляссе', name_kz: 'Гляссе', name_en: 'Glasse', price: 1690 },
     ]
   },
   {
@@ -749,9 +770,18 @@ const menuData = [
 // ─────────────────────────────
 //  STATE
 // ─────────────────────────────
-let currentLang = 'ru';
+const WHATSAPP_PHONE = '7XXXXXXXXXX'; // номер заведения для заказов, формат: 7701XXXXXXX
+
+let currentLang = localStorage.getItem('izakaya_lang') || 'ru';
 let searchQuery = '';
-let cart = [];
+let cart = loadCart();
+
+function loadCart() {
+  try { return JSON.parse(localStorage.getItem('izakaya_cart')) || []; } catch (e) { return []; }
+}
+function saveCart() {
+  localStorage.setItem('izakaya_cart', JSON.stringify(cart));
+}
 
 // ─────────────────────────────
 //  INIT
@@ -763,6 +793,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initLang();
   initScrollSpy();
   initCart();
+  syncLangUI();
+  updateCartUI();
 });
 
 // ─────────────────────────────
@@ -839,7 +871,7 @@ function renderMenu() {
   main.querySelectorAll('.cat-section').forEach(el => el.remove());
 
   menuData.forEach(cat => {
-    const items = cat.items.filter(item => matchesSearch(item));
+    const items = cat.items.map((item, idx) => ({ item, idx })).filter(({ item }) => matchesSearch(item));
     const section = document.createElement('div');
     section.className = 'cat-section' + (items.length === 0 ? ' hidden' : '');
     section.id = 'cat-' + cat.id;
@@ -859,15 +891,16 @@ function renderMenu() {
     const list = document.createElement('div');
     list.className = 'items-list';
 
-    items.forEach(item => {
+    items.forEach(({ item, idx }) => {
       totalVisible++;
       const card = document.createElement('div');
       card.className = 'item-card';
-      const inCart = cart.some(e => e.key === item.name);
+      const key = cat.id + '_' + idx;
+      const inCart = cart.some(e => e.key === key);
       const rightHtml = `
         <div class="item-right">
           <div class="item-price">${formatPrice(item.price)}</div>
-          <button class="add-btn${inCart ? ' in-cart' : ''}" data-name="${item.name}" data-price="${item.price}">+</button>
+          <button class="add-btn${inCart ? ' in-cart' : ''}" data-key="${key}" data-name="${item.name}" data-cat="${cat.name}" data-price="${item.price}">+</button>
         </div>`;
       card.innerHTML = `
         <div class="item-info">
@@ -916,14 +949,18 @@ function initLang() {
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       currentLang = btn.dataset.lang;
-      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('searchInput').placeholder =
-        currentLang === 'en' ? 'Search menu...' : currentLang === 'kz' ? 'Мәзірден іздеу...' : 'Поиск по меню...';
+      localStorage.setItem('izakaya_lang', currentLang);
+      syncLangUI();
       renderMenu();
       buildCategoryNavLabels();
     });
   });
+}
+
+function syncLangUI() {
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
+  document.getElementById('searchInput').placeholder =
+    currentLang === 'en' ? 'Search menu...' : currentLang === 'kz' ? 'Мәзірден іздеу...' : 'Поиск по меню...';
 }
 
 // ─────────────────────────────
@@ -937,11 +974,11 @@ function plural(n, a, b, c) {
 function cartTotal() { return cart.reduce((s, e) => s + e.price * e.qty, 0); }
 function cartCount() { return cart.reduce((s, e) => s + e.qty, 0); }
 
-function addToCart(name, price) {
-  const existing = cart.find(e => e.key === name);
+function addToCart(key, name, price, cat) {
+  const existing = cart.find(e => e.key === key);
   if (existing) existing.qty++;
-  else cart.push({ key: name, name, price, qty: 1 });
-  updateCartUI(); renderMenu();
+  else cart.push({ key, name, cat, price, qty: 1 });
+  saveCart(); updateCartUI(); renderMenu();
 }
 
 function changeQty(key, delta) {
@@ -949,12 +986,19 @@ function changeQty(key, delta) {
   if (!entry) return;
   entry.qty += delta;
   if (entry.qty <= 0) cart = cart.filter(e => e.key !== key);
-  updateCartUI(); renderCartItems(); renderMenu();
+  saveCart(); updateCartUI(); renderCartItems(); renderMenu();
   if (cart.length === 0) closeCart();
 }
 
 function clearCart() {
-  cart = []; updateCartUI(); renderMenu(); closeCart();
+  cart = []; saveCart(); updateCartUI(); renderMenu(); closeCart();
+}
+
+function sendToWhatsApp() {
+  if (cart.length === 0) return;
+  const lines = cart.map(e => `• ${e.name}${e.cat ? ' (' + e.cat + ')' : ''} ×${e.qty} — ${(e.price * e.qty).toLocaleString('ru-RU')} тг`);
+  const text = 'Заказ Izakaya:\n' + lines.join('\n') + '\n\nИтого: ' + cartTotal().toLocaleString('ru-RU') + ' тг';
+  window.open('https://wa.me/' + WHATSAPP_PHONE + '?text=' + encodeURIComponent(text), '_blank');
 }
 
 function updateCartUI() {
@@ -972,9 +1016,9 @@ function renderCartItems() {
         <div class="cart-row-price">${(e.price * e.qty).toLocaleString('ru-RU')} тг</div>
       </div>
       <div class="cart-qty">
-        <button class="qty-btn" onclick="changeQty('${e.key.replace(/'/g,"\\'")}', -1)">−</button>
+        <button class="qty-btn" onclick="changeQty('${e.key}', -1)">−</button>
         <span class="qty-num">${e.qty}</span>
-        <button class="qty-btn" onclick="changeQty('${e.key.replace(/'/g,"\\'")}', 1)">+</button>
+        <button class="qty-btn" onclick="changeQty('${e.key}', 1)">+</button>
       </div>
     </div>`).join('');
   document.getElementById('cartTotalAmount').textContent = cartTotal().toLocaleString('ru-RU') + ' тг';
@@ -986,7 +1030,7 @@ function closeCart() { document.getElementById('cartOverlay').classList.remove('
 function initCart() {
   document.getElementById('mainContent').addEventListener('click', (e) => {
     const addBtn = e.target.closest('.add-btn');
-    if (addBtn) addToCart(addBtn.dataset.name, Number(addBtn.dataset.price));
+    if (addBtn) addToCart(addBtn.dataset.key, addBtn.dataset.name, Number(addBtn.dataset.price), addBtn.dataset.cat);
   });
 }
 </script>
