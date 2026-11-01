@@ -1,0 +1,8 @@
+# Не выкладывать на сайт (Cloudflare assets = вся папка)
+.git
+.wrangler
+*.md
+.DS_Store
+.assetsignore
+.gitignore
+wrangler.toml

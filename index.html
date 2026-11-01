@@ -2,475 +2,476 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Izakaya — Меню</title>
-  <meta name="description" content="Izakaya — японский бар. Меню: роллы и суши, супы, гриль, горячие блюда, саке, японский виски, коктейли, вино и напитки." />
-  <meta name="theme-color" content="#0a0a0f" />
+  <meta name="description" content="Izakaya — японская кухня и бар. Роллы, суши, горячие блюда, гриль, коктейли, саке и японский виски." />
+  <meta name="theme-color" content="#121A2C" />
+  <meta name="color-scheme" content="dark" />
   <meta property="og:title" content="Izakaya — Меню" />
-  <meta property="og:description" content="Японский бар. Роллы и суши, супы, гриль, саке, японский виски, коктейли и вино." />
+  <meta property="og:description" content="Японская кухня и бар: роллы, суши, гриль, коктейли, саке и японский виски." />
   <meta property="og:type" content="website" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏮</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23121A2C%22/><ellipse cx=%2250%22 cy=%2252%22 rx=%2230%22 ry=%2236%22 fill=%22%23D7262B%22/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Shippori+Mincho+B1:wght@600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --header-h: 60px;
-      --section-h: 44px;
-      --nav-h: 52px;
-      --red: #c0392b;
-      --red-light: #e74c3c;
-      --gold: #c9a84c;
-      --gold-light: #f0c96a;
-      --bg: #0a0a0f;
-      --card: rgba(255,255,255,0.04);
-      --text: #f0ece4;
-      --text2: rgba(240,236,228,0.5);
-      --border: rgba(201,168,76,0.15);
-      --shadow: rgba(192,57,43,0.15);
+      --night: #121A2C;        /* индиго норэна ночью */
+      --indigo: #1B2640;       /* панели и шторки */
+      --indigo-2: #26324F;
+      --paper: #EFE6D3;        /* рисовая бумага */
+      --muted: #9AA3B9;
+      --lantern: #D7262B;      /* красный фонарь = красный логотипа */
+      --lantern-text: #F2734A; /* тот же свет, читаемый мелким текстом */
+      --hairline: rgba(239,230,211,0.12);
+      --top-h: 48px;
+      --tabs-h: 48px;
+      --bar-h: calc(var(--top-h) + var(--tabs-h));
+      --mincho: 'Shippori Mincho B1', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+      --body: 'Golos Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: var(--body);
+      background: var(--night);
+      color: var(--paper);
       min-height: 100vh;
-      color: var(--text);
-      background:
-        radial-gradient(ellipse 60% 50% at 10% 10%, rgba(192,57,43,0.18) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 60% at 90% 30%, rgba(201,168,76,0.1) 0%, transparent 60%),
-        radial-gradient(ellipse 70% 40% at 50% 100%, rgba(192,57,43,0.1) 0%, transparent 60%),
-        #0a0a0f;
-      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
     }
+    button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+    :focus-visible { outline: 2px solid var(--paper); outline-offset: 2px; border-radius: 6px; }
 
-    .orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(90px); }
-    .orb-1 { width: 450px; height: 350px; background: rgba(192,57,43,0.14); top: -80px; left: -100px; }
-    .orb-2 { width: 400px; height: 400px; background: rgba(201,168,76,0.08); top: 35%; right: -120px; }
-    .orb-3 { width: 350px; height: 350px; background: rgba(192,57,43,0.1); bottom: -80px; left: 30%; }
-
-    /* ── HEADER ── */
-    header {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(10,10,15,0.85);
-      backdrop-filter: blur(40px) saturate(180%);
-      -webkit-backdrop-filter: blur(40px) saturate(180%);
-      border-bottom: 1.5px solid rgba(201,168,76,0.45);
-      box-shadow: 0 1px 0 rgba(201,168,76,0.15), 0 4px 24px rgba(0,0,0,0.5);
+    /* ── HERO: красный фонарь идзакаи ── */
+    .hero {
+      position: relative; overflow: hidden; text-align: center;
+      padding: calc(6px + env(safe-area-inset-top, 0px)) 16px 26px;
     }
-    .header-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      height: var(--header-h); padding: 0 20px;
-    }
-    .header-logo img { height: 56px; width: auto; display: block; filter: brightness(0) invert(1); }
-    .header-logo-text {
-      font-size: 22px; font-weight: 800; letter-spacing: 0.12em;
-      color: var(--text);
-      display: flex; flex-direction: column; line-height: 1.1;
-    }
-    .header-logo-sub { font-size: 9px; font-weight: 400; letter-spacing: 0.2em; color: var(--gold); opacity: 0.8; }
-
-    .header-actions { display: flex; align-items: center; gap: 10px; }
-
-    .search-btn {
-      background: rgba(201,168,76,0.08);
-      border: 1px solid rgba(201,168,76,0.2);
-      border-radius: 50%; width: 36px; height: 36px;
-      cursor: pointer; color: var(--gold);
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s;
-    }
-    .search-btn:hover { background: rgba(201,168,76,0.15); }
-    .search-btn svg { width: 17px; height: 17px; }
-
-    .lang-switcher {
-      display: flex; background: rgba(201,168,76,0.06);
-      border: 1px solid rgba(201,168,76,0.15);
-      border-radius: 22px; padding: 3px; gap: 1px;
-    }
+    .hero-top { position: relative; z-index: 2; display: flex; justify-content: flex-end; max-width: 640px; margin: 0 auto; }
+    .lang { display: flex; gap: 2px; }
     .lang-btn {
-      border: none; background: none; cursor: pointer;
-      font-size: 11px; font-weight: 700;
-      padding: 4px 10px; border-radius: 18px;
-      color: rgba(201,168,76,0.45); transition: all 0.2s;
-      letter-spacing: 0.04em;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+      padding: 8px; color: var(--muted); position: relative;
     }
-    .lang-btn.active { background: var(--gold); color: #0a0a0f; box-shadow: 0 2px 8px rgba(201,168,76,0.35); }
-
-    /* ── SEARCH BAR ── */
-    .search-bar { display: none; padding: 8px 20px 14px; }
-    .search-bar.visible { display: block; }
-    .search-bar input {
-      width: 100%;
-      background: rgba(255,255,255,0.05);
-      border: 1.5px solid rgba(201,168,76,0.2);
-      border-radius: 14px; padding: 11px 18px;
-      font-size: 15px; color: var(--text); outline: none;
-      transition: border-color 0.2s;
+    .lang-btn.active { color: var(--paper); }
+    .lang-btn.active::after {
+      content: ''; position: absolute; left: 8px; right: 8px; bottom: 4px;
+      height: 1.5px; background: var(--lantern-text);
     }
-    .search-bar input::placeholder { color: var(--text2); }
-    .search-bar input:focus { border-color: var(--gold); }
-
-    /* ── SECTION TABS ── */
-    #sectionTabs {
-      position: sticky; top: var(--header-h); z-index: 99;
-      background: rgba(10,10,15,0.85);
-      backdrop-filter: blur(32px);
-      -webkit-backdrop-filter: blur(32px);
-      display: flex;
-      border-bottom: 1px solid var(--border);
-      height: var(--section-h);
+    .glow {
+      position: absolute; left: 50%; top: 10px; width: 340px; height: 340px; margin-left: -170px;
+      background: radial-gradient(circle, rgba(255,110,60,0.30) 0%, rgba(215,38,43,0.10) 40%, transparent 68%);
+      pointer-events: none;
     }
-    .section-tab {
-      flex: 1;
-      border: none;
-      background: none;
-      cursor: pointer;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      color: var(--text2);
-      border-bottom: 2px solid transparent;
-      transition: all 0.2s;
+    .lantern-wrap { position: relative; z-index: 1; height: 150px; margin-top: -30px; }
+    .lantern {
+      width: 92px; height: auto; display: block; margin: 0 auto;
+      transform-origin: 50% 0; animation: sway 6s ease-in-out infinite;
     }
-    .section-tab.active {
-      color: var(--gold-light);
-      border-bottom-color: var(--gold);
+    @keyframes sway { 0%, 100% { transform: rotate(-2.2deg); } 50% { transform: rotate(2.2deg); } }
+    .logo { position: relative; z-index: 1; display: block; width: 190px; height: auto; margin: 14px auto 0; }
+    .kicker {
+      position: relative; z-index: 1; margin-top: 10px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted);
     }
 
-    /* ── CATEGORY NAV ── */
-    #categoryNav {
-      position: sticky; top: calc(var(--header-h) + var(--section-h)); z-index: 98;
-      background: rgba(10,10,15,0.8);
-      backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
-      border-bottom: 1px solid var(--border);
-      overflow-x: auto; white-space: nowrap;
-      height: var(--nav-h); display: flex;
-      align-items: center; padding: 0 14px; gap: 6px;
-      scrollbar-width: none;
+    /* ── STICKY BAR ── */
+    .bar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(27,38,64,0.96);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
     }
-    #categoryNav::-webkit-scrollbar { display: none; }
+    .bar-top, .bar-tabs { max-width: 640px; margin: 0 auto; display: flex; align-items: stretch; }
+    .bar-top { height: var(--top-h); padding: 0 4px; gap: 4px; align-items: center; }
+    .bar-tabs { height: var(--tabs-h); border-top: 1px solid var(--hairline); }
+    .icon-btn {
+      flex-shrink: 0; width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center; color: var(--paper);
+    }
+    .icon-btn svg { width: 19px; height: 19px; }
 
-    .cat-btn {
-      border: 1.5px solid rgba(201,168,76,0.2);
-      background: rgba(255,255,255,0.04);
-      cursor: pointer; font-size: 12px; font-weight: 600;
-      padding: 6px 14px; border-radius: 20px;
-      color: var(--text2); white-space: nowrap;
-      transition: all 0.18s; flex-shrink: 0;
+    .segment {
+      flex: 1; display: grid; grid-template-columns: 1fr 1fr; height: 36px; padding: 3px;
+      border-radius: 10px; background: rgba(0,0,0,0.25);
     }
-    .cat-btn.active {
-      background: var(--red); border-color: var(--red);
-      color: #fff; box-shadow: 0 3px 10px rgba(192,57,43,0.4);
-    }
+    .seg-btn { border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--muted); transition: background 0.2s, color 0.2s; }
+    .seg-btn.active { background: var(--paper); color: var(--night); }
 
-    /* ── MAIN ── */
-    main { position: relative; z-index: 1; padding: 12px 0 100px; }
+    .tabs {
+      flex: 1; display: flex; overflow-x: auto; scrollbar-width: none; padding: 0 22px 0 8px;
+      -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 32px), transparent);
+      mask-image: linear-gradient(90deg, #000 calc(100% - 32px), transparent);
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab {
+      flex-shrink: 0; white-space: nowrap; padding: 0 10px;
+      font-size: 14px; font-weight: 500; color: var(--muted); position: relative;
+    }
+    .tab::after {
+      content: ''; position: absolute; left: 10px; right: 10px; bottom: -1px; height: 2px;
+      background: var(--lantern-text); transform: scaleX(0); transition: transform 0.25s ease;
+    }
+    .tab.active { color: var(--paper); }
+    .tab.active::after { transform: scaleX(1); }
 
-    /* ── CATEGORY SECTION ── */
-    .cat-section { padding: 20px 14px 6px; }
-    .cat-section.hidden { display: none; }
-    .cat-title {
-      font-size: 13px; font-weight: 800;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--gold); opacity: 1;
-      margin-bottom: 8px; padding-left: 4px;
+    .search { flex: 1; display: none; align-items: center; }
+    .search input {
+      flex: 1; min-width: 0; height: 100%; border: none; background: none; outline: none;
+      font: inherit; font-size: 16px; color: var(--paper); padding: 0 4px 0 10px;
     }
-    .cat-subtitle {
-      font-size: 10px; color: var(--text2);
-      margin-bottom: 8px; padding-left: 4px;
-      letter-spacing: 0.05em;
-    }
+    .search input::placeholder { color: var(--muted); }
+    .search input::-webkit-search-cancel-button { -webkit-appearance: none; display: none; }
+    .bar.searching .segment, .bar.searching #searchOpen, .bar.searching #navOpen, .bar.searching .bar-tabs { display: none; }
+    .bar.searching .search { display: flex; }
 
-    /* ── ITEMS LIST ── */
-    .items-list {
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(20px) saturate(140%);
-      -webkit-backdrop-filter: blur(20px) saturate(140%);
-      border: 1px solid rgba(201,168,76,0.25);
-      border-radius: 18px; overflow: hidden;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(201,168,76,0.12);
-    }
+    /* ── MENU ── */
+    main { max-width: 640px; margin: 0 auto; padding: 4px 16px 0; }
+    .grp { padding-top: 40px; scroll-margin-top: calc(var(--bar-h) + 4px); }
+    .grp.hidden { display: none; }
 
-    .item-card {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      padding: 14px 18px; gap: 14px;
-      border-bottom: 1px solid rgba(201,168,76,0.07);
-      transition: background 0.15s;
+    /* табличка о-синагаки: как меню на деревянной стене идзакаи */
+    .grp-head { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 8px; }
+    .tag {
+      position: relative; flex: 0 0 34px; margin-top: 6px;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 10px 0 8px; border-radius: 3px;
+      background: var(--paper); color: #1A1F2E;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.35);
     }
-    .item-card:last-child { border-bottom: none; }
-    .item-card:active { background: rgba(201,168,76,0.05); }
-    .item-card.hidden { display: none; }
+    .tag::before {
+      content: ''; position: absolute; top: -9px; left: 50%; width: 6px; height: 6px; margin-left: -3px;
+      border-radius: 50%; background: var(--muted);
+    }
+    .tag-kanji { writing-mode: vertical-rl; font-family: var(--mincho); font-weight: 600; font-size: 17px; letter-spacing: 0.12em; line-height: 1; }
+    .tag-seal { width: 11px; height: 11px; border-radius: 2px; background: var(--lantern); }
+    .grp-titles { flex: 1; min-width: 0; padding-top: 4px; }
+    .grp-name { font-size: 30px; font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; }
+    .grp-meta { margin-top: 6px; font-size: 13px; color: var(--muted); }
 
-    .item-thumb {
-      width: 84px; height: 84px; border-radius: 14px;
-      object-fit: cover; flex-shrink: 0;
-      border: 1px solid rgba(201,168,76,0.25);
-      background: rgba(255,255,255,0.05);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+    .sub-head {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+      margin-top: 26px; padding-bottom: 8px; border-bottom: 1px solid rgba(242,115,74,0.45);
     }
-    .item-info { flex: 1; min-width: 0; }
-    .item-name { font-size: 14px; font-weight: 400; color: var(--text); line-height: 1.35; }
-    .item-desc { font-size: 11px; color: var(--gold); opacity: 0.6; line-height: 1.4; margin-top: 2px; font-style: italic; }
-    .item-right { display: flex; flex-direction: row; align-items: center; gap: 10px; flex-shrink: 0; }
-    .item-price {
-      font-size: 13px; font-weight: 600; color: var(--gold);
-      white-space: nowrap;
-      background: rgba(201,168,76,0.1);
-      border: 1px solid rgba(201,168,76,0.2);
-      border-radius: 10px; padding: 3px 10px;
-    }
+    .sub-name { font-size: 12.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lantern-text); }
+    .sub-portion { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
 
-    /* ── ADD BUTTON ── */
-    .add-btn {
-      width: 30px; height: 30px; border-radius: 50%;
-      background: var(--red); border: none; cursor: pointer;
-      color: #fff; font-size: 20px; line-height: 1;
+    .items { list-style: none; }
+    .dish { padding: 15px 0 14px; border-bottom: 1px solid var(--hairline); }
+    .dish:last-child { border-bottom: none; }
+    .dish.with-photo { padding-top: 22px; }
+    .dish.drink { padding: 12px 0 11px; }
+    .dish-photo {
+      display: block; width: 100%; aspect-ratio: 4 / 3; margin-bottom: 13px;
+      border-radius: 14px; overflow: hidden; background: var(--indigo);
+    }
+    .dish-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .dish-line { display: flex; align-items: flex-end; }
+    .dish-name { flex: 0 1 auto; font-size: 16.5px; font-weight: 500; line-height: 1.35; }
+    .drink .dish-name { font-size: 15.5px; }
+    .leader { flex: 1 1 16px; min-width: 16px; margin: 0 8px 6px; border-bottom: 1.5px dotted rgba(239,230,211,0.28); }
+    .dish-price { flex-shrink: 0; font-size: 16px; font-weight: 600; line-height: 1.35; font-variant-numeric: tabular-nums; }
+    .dish-price small { margin-left: 2px; font-size: 13px; font-weight: 500; color: var(--muted); }
+    .dish-desc { margin-top: 5px; padding-right: 48px; font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+    .drink .dish-desc { margin-top: 2px; font-size: 13px; }
+
+    .add {
+      flex-shrink: 0; position: relative;
+      width: 32px; height: 32px; margin: 0 0 -4px 12px; border-radius: 50%;
+      border: 1.5px solid rgba(239,230,211,0.55); color: var(--paper);
+      font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums;
       display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 2px 8px rgba(192,57,43,0.4);
-      transition: background 0.15s, transform 0.1s;
-      flex-shrink: 0;
-      -webkit-tap-highlight-color: transparent;
+      transition: background 0.15s, border-color 0.15s;
     }
-    .add-btn:active { transform: scale(0.88); }
-    .add-btn.in-cart { background: var(--gold); }
+    .add::before { content: ''; position: absolute; inset: -8px; }
+    .add svg { width: 14px; height: 14px; }
+    .add.in-cart { background: var(--lantern); border-color: var(--lantern); color: #fff; }
+    .add.pop { animation: pop 0.28s ease; }
+    @keyframes pop { 40% { transform: scale(1.18); } }
 
-    /* ── CART FAB ── */
-    .cart-fab {
-      position: fixed; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); right: 20px; z-index: 200;
-      background: var(--red); border: none;
-      border-radius: 50px; padding: 0 20px 0 16px; height: 52px;
-      display: none; align-items: center; gap: 10px;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(192,57,43,0.5);
-      transition: transform 0.2s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .cart-fab.visible { display: flex; }
-    .cart-fab:active { transform: scale(0.96); }
-    .cart-fab-icon { font-size: 20px; }
-    .cart-fab-info { display: flex; flex-direction: column; align-items: flex-start; }
-    .cart-fab-count { font-size: 11px; color: rgba(255,255,255,0.75); line-height: 1; }
-    .cart-fab-total { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.3; }
+    .empty { display: none; text-align: center; padding: 72px 20px 24px; }
+    .empty.visible { display: block; }
+    .empty-title { font-size: 22px; font-weight: 600; }
+    .empty-text { margin-top: 8px; font-size: 14px; color: var(--muted); }
 
-    /* ── CART DRAWER ── */
-    .cart-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.55);
-      z-index: 300; opacity: 0; pointer-events: none;
-      transition: opacity 0.3s;
-    }
-    .cart-overlay.open { opacity: 1; pointer-events: auto; }
+    footer { max-width: 640px; margin: 56px auto 0; padding: 0 16px 140px; text-align: center; }
+    .kampai { font-family: var(--mincho); font-weight: 600; font-size: 40px; letter-spacing: 0.2em; color: var(--lantern-text); }
+    .kampai-text { margin-top: 8px; font-size: 14px; color: var(--muted); }
 
-    .cart-drawer {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 301;
-      background: #12100f;
-      border-radius: 20px 20px 0 0;
-      border-top: 1px solid rgba(201,168,76,0.2);
-      max-height: 80vh; display: flex; flex-direction: column;
-      transform: translateY(100%);
-      transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
-      padding-bottom: env(safe-area-inset-bottom, 0);
-    }
-    .cart-drawer.open { transform: translateY(0); }
-
-    .cart-handle {
-      width: 36px; height: 4px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 2px; margin: 12px auto 0; flex-shrink: 0;
-    }
-    .cart-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 20px 12px; flex-shrink: 0;
-      border-bottom: 1px solid rgba(201,168,76,0.1);
-    }
-    .cart-title { font-size: 16px; font-weight: 700; color: var(--text); }
-    .cart-clear {
-      font-size: 13px; color: var(--text2);
-      background: none; border: none; cursor: pointer; padding: 4px 8px;
-    }
-    .cart-items { overflow-y: auto; flex: 1; padding: 8px 0; }
-    .cart-row {
+    /* ── CART BAR ── */
+    .cart-bar {
+      position: fixed; z-index: 60; left: 16px; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+      max-width: 608px; margin: 0 auto; height: 56px; padding: 0 18px 0 12px;
       display: flex; align-items: center; gap: 12px;
-      padding: 10px 20px;
-      border-bottom: 1px solid rgba(201,168,76,0.07);
+      background: var(--lantern); color: #fff; border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(215,38,43,0.35);
+      transform: translateY(calc(100% + 40px)); transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
     }
-    .cart-row:last-child { border-bottom: none; }
-    .cart-row-info { flex: 1; min-width: 0; }
-    .cart-row-name { font-size: 14px; color: var(--text); line-height: 1.3; }
-    .cart-row-price { font-size: 13px; color: var(--text2); margin-top: 2px; }
-    .cart-qty { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-    .qty-btn {
-      width: 28px; height: 28px; border-radius: 50%;
-      border: 1px solid rgba(201,168,76,0.2);
-      background: rgba(201,168,76,0.07);
-      color: var(--gold); font-size: 16px;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: background 0.15s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .qty-btn:active { background: rgba(201,168,76,0.15); }
-    .qty-num { font-size: 15px; font-weight: 600; min-width: 20px; text-align: center; color: var(--text); }
-    .cart-footer {
-      padding: 16px 20px 28px; flex-shrink: 0;
-      border-top: 1px solid rgba(201,168,76,0.1);
-    }
-    .cart-total-row {
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .cart-total-label { font-size: 14px; color: var(--text2); }
-    .cart-total-amount { font-size: 22px; font-weight: 700; color: var(--gold); }
-    .cart-send {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      width: 100%; margin-top: 14px;
-      background: #25d366; border: none; border-radius: 14px;
-      padding: 14px; font-size: 15px; font-weight: 700; color: #fff;
-      cursor: pointer;
-      box-shadow: 0 4px 16px rgba(37,211,102,0.35);
-      transition: transform 0.15s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .cart-send:active { transform: scale(0.97); }
-
-    @media (min-width: 640px) {
-      .cart-drawer { max-width: 480px; left: 50%; transform: translateX(-50%) translateY(100%); right: auto; border-radius: 20px 20px 0 0; }
-      .cart-drawer.open { transform: translateX(-50%) translateY(0); }
-    }
-
-    /* ── LIGHTBOX ── */
-    .item-thumb { cursor: pointer; }
-    .lightbox {
-      position: fixed; inset: 0; z-index: 300;
-      background: rgba(10,10,15,0.9);
-      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    .cart-bar.visible { transform: none; }
+    .cart-count {
+      min-width: 30px; height: 30px; padding: 0 8px; border-radius: 15px;
+      background: var(--paper); color: var(--night); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums;
       display: flex; align-items: center; justify-content: center;
-      padding: 24px;
-      opacity: 0; pointer-events: none; transition: opacity 0.2s;
     }
-    .lightbox.open { opacity: 1; pointer-events: auto; }
-    .lightbox-inner {
-      max-width: 560px; width: 100%; text-align: center;
-      transform: scale(0.95); transition: transform 0.2s;
+    .cart-label { flex: 1; text-align: left; font-size: 15px; font-weight: 500; }
+    .cart-sum { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+    /* ── SHEETS ── */
+    .overlay {
+      position: fixed; inset: 0; z-index: 70; background: rgba(5,8,16,0.6);
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
     }
-    .lightbox.open .lightbox-inner { transform: scale(1); }
-    .lightbox-img {
-      width: 100%; max-height: 60vh; object-fit: cover;
-      border-radius: 22px;
-      border: 1px solid rgba(201,168,76,0.35);
-      box-shadow: 0 16px 56px rgba(0,0,0,0.65);
+    .overlay.open { opacity: 1; pointer-events: auto; }
+    .sheet, .nav-sheet {
+      position: fixed; z-index: 71; left: 0; right: 0; bottom: 0;
+      max-width: 640px; margin: 0 auto; max-height: 85vh;
+      background: var(--indigo); border-radius: 20px 20px 0 0;
+      transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
     }
-    .lightbox-name { margin-top: 16px; font-size: 19px; font-weight: 700; color: var(--text); }
-    .lightbox-desc { margin-top: 6px; font-size: 13px; color: var(--gold); opacity: 0.75; font-style: italic; line-height: 1.5; }
-    .lightbox-price {
-      display: inline-block; margin-top: 12px;
-      font-size: 15px; font-weight: 700; color: var(--gold);
-      background: rgba(201,168,76,0.12);
-      border: 1px solid rgba(201,168,76,0.3);
-      border-radius: 12px; padding: 6px 16px;
+    .sheet.open, .nav-sheet.open { transform: none; }
+    .sheet { display: flex; flex-direction: column; padding-bottom: env(safe-area-inset-bottom, 0px); }
+    .sheet-band { height: 6px; width: 40px; margin: 10px auto 0; border-radius: 3px; background: var(--indigo-2); }
+    .sheet-head { display: flex; align-items: baseline; justify-content: space-between; padding: 16px 20px 12px; border-bottom: 1px solid var(--hairline); }
+    .sheet-title { font-size: 24px; font-weight: 600; }
+    .sheet-clear { font-size: 14px; color: var(--muted); padding: 6px 0 6px 12px; }
+    .sheet-items { overflow-y: auto; flex: 1; padding: 0 20px; }
+    .row { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--hairline); }
+    .row:last-child { border-bottom: none; }
+    .row-info { flex: 1; min-width: 0; }
+    .row-name { font-size: 15px; font-weight: 500; line-height: 1.3; }
+    .row-price { margin-top: 2px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .qty { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+    .qty-btn { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--indigo-2); font-size: 18px; line-height: 1; }
+    .qty-btn:active { background: var(--indigo-2); }
+    .qty-num { min-width: 24px; text-align: center; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .sheet-foot { padding: 16px 20px 20px; border-top: 1px solid var(--hairline); }
+    .total { display: flex; align-items: baseline; justify-content: space-between; }
+    .total-label { font-size: 14px; color: var(--muted); }
+    .total-sum { font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .show-btn {
+      width: 100%; margin-top: 16px; height: 54px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: var(--paper); color: var(--night); font-size: 16px; font-weight: 600;
     }
-    .lightbox-close {
-      position: absolute; top: 18px; right: 18px;
-      width: 38px; height: 38px; border-radius: 50%;
-      border: 1px solid rgba(201,168,76,0.3);
-      background: rgba(255,255,255,0.06);
-      color: var(--text); font-size: 18px; cursor: pointer;
+    .show-btn svg { width: 20px; height: 20px; }
+    .show-hint { margin-top: 10px; font-size: 13px; color: var(--muted); text-align: center; }
+
+    .nav-sheet { overflow-y: auto; padding: 0 16px calc(20px + env(safe-area-inset-bottom, 0px)); }
+    .nav-head { display: flex; align-items: center; justify-content: space-between; padding: 18px 0 4px; }
+    .nav-title { font-size: 24px; font-weight: 600; }
+    .nav-close { width: 44px; height: 44px; margin-right: -10px; display: flex; align-items: center; justify-content: center; color: var(--muted); }
+    .nav-close svg { width: 20px; height: 20px; }
+    .nav-section { margin: 16px 0 8px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lantern-text); }
+    .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .nav-item {
+      text-align: left; min-height: 68px; padding: 11px 13px; border-radius: 14px;
+      background: var(--night); border: 1px solid var(--hairline);
+      display: flex; flex-direction: column; justify-content: space-between; gap: 6px;
+    }
+    .nav-item-name { font-size: 15px; font-weight: 600; line-height: 1.25; }
+    .nav-item-count { font-size: 12.5px; color: var(--muted); }
+    .nav-item.active { background: var(--paper); border-color: var(--paper); color: var(--night); }
+    .nav-item.active .nav-item-count { color: #4A5168; }
+
+    /* ── PHOTO VIEWER ── */
+    .viewer {
+      position: fixed; inset: 0; z-index: 80;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: calc(56px + env(safe-area-inset-top, 0px)) 16px calc(24px + env(safe-area-inset-bottom, 0px));
+      background: rgba(8,12,22,0.97); text-align: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.25s;
+    }
+    .viewer.open { opacity: 1; pointer-events: auto; }
+    .viewer:focus { outline: none; }
+    .viewer-close {
+      position: absolute; top: calc(6px + env(safe-area-inset-top, 0px)); right: 6px;
+      width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+    }
+    .viewer-close svg { width: 22px; height: 22px; }
+    .viewer img { display: block; max-width: min(100%, 560px); max-height: 60vh; border-radius: 16px; object-fit: contain; }
+    .viewer-name { margin-top: 20px; font-size: 24px; font-weight: 600; line-height: 1.2; max-width: 520px; }
+    .viewer-price { margin-top: 6px; font-size: 16px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .viewer-add {
+      margin-top: 20px; height: 50px; padding: 0 28px; border-radius: 14px;
+      background: var(--paper); color: var(--night); font-size: 15px; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .viewer-add .cnt {
+      min-width: 24px; height: 24px; padding: 0 7px; border-radius: 12px;
+      background: var(--lantern); color: #fff; font-size: 13px;
+      display: inline-flex; align-items: center; justify-content: center;
     }
 
-    /* ── EMPTY STATE ── */
-    .empty-state { display: none; text-align: center; padding: 80px 20px; color: var(--text2); }
-    .empty-state.visible { display: block; }
-    .empty-state-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.4; }
-    .empty-state-text { font-size: 15px; font-weight: 500; }
+    /* ── WAITER SCREEN: светлый, по-русски, крупно ── */
+    .waiter {
+      position: fixed; inset: 0; z-index: 90; overflow-y: auto;
+      background: var(--paper); color: #141A2A;
+      transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
+    }
+    .waiter.open { transform: none; }
+    .waiter-band { height: calc(8px + env(safe-area-inset-top, 0px)); background: var(--lantern); }
+    .waiter-inner { max-width: 640px; margin: 0 auto; padding: 8px 20px calc(28px + env(safe-area-inset-bottom, 0px)); }
+    .waiter-back { display: inline-flex; align-items: center; gap: 4px; height: 44px; margin-left: -6px; padding: 0 6px; font-size: 15px; font-weight: 500; color: #9E1A1E; }
+    .waiter-back svg { width: 18px; height: 18px; }
+    .waiter :focus-visible { outline-color: #141A2A; }
+    .waiter-title { margin-top: 6px; font-size: 34px; font-weight: 600; }
+    .waiter-sub { margin-top: 2px; font-size: 15px; color: #5A6075; }
+    .waiter-group { margin-top: 22px; padding-bottom: 6px; border-bottom: 1.5px solid var(--lantern); font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #9E1A1E; }
+    .waiter-row { display: flex; align-items: baseline; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(20,26,42,0.12); }
+    .waiter-qty { flex-shrink: 0; min-width: 40px; font-size: 22px; font-weight: 600; color: #9E1A1E; font-variant-numeric: tabular-nums; }
+    .waiter-name { flex: 1; font-size: 20px; font-weight: 500; line-height: 1.3; }
+    .waiter-sum { flex-shrink: 0; font-size: 17px; font-weight: 500; color: #5A6075; font-variant-numeric: tabular-nums; }
+    .waiter-total { display: flex; align-items: baseline; justify-content: space-between; margin-top: 22px; }
+    .waiter-total-label { font-size: 18px; color: #5A6075; }
+    .waiter-total-sum { font-size: 32px; font-weight: 600; font-variant-numeric: tabular-nums; }
 
     @media (min-width: 640px) {
-      .cat-section { padding: 24px 24px 8px; max-width: 680px; margin: 0 auto; }
-      .item-thumb { width: 104px; height: 104px; border-radius: 16px; }
-      .item-name { font-size: 15px; }
-      .item-desc { font-size: 12px; }
+      .grp-name { font-size: 34px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
     }
   </style>
 </head>
 <body>
 
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
-
-<!-- HEADER -->
-<header>
-  <div class="header-inner">
-    <div class="header-logo"><img src="logo.png" alt="Izakaya"></div>
-    <div class="header-actions">
-      <button class="search-btn" id="searchToggle" aria-label="Поиск">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-      </button>
-      <div class="lang-switcher">
-        <button class="lang-btn active" data-lang="ru">РУ</button>
-        <button class="lang-btn" data-lang="kz">ҚЗ</button>
-        <button class="lang-btn" data-lang="en">EN</button>
-      </div>
+<header class="hero">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="hero-top">
+    <div class="lang" role="group" aria-label="Язык">
+      <button class="lang-btn" data-lang="ru">РУ</button>
+      <button class="lang-btn" data-lang="kz">ҚЗ</button>
+      <button class="lang-btn" data-lang="en">EN</button>
     </div>
   </div>
-  <div class="search-bar" id="searchBar">
-    <input type="text" id="searchInput" placeholder="Поиск по меню..." autocomplete="off" />
+  <div class="lantern-wrap" aria-hidden="true">
+    <svg class="lantern" viewBox="0 0 120 190">
+      <defs>
+        <radialGradient id="lanternFill" cx="50%" cy="46%" r="62%">
+          <stop offset="0" stop-color="#FF8D4E"/>
+          <stop offset="0.55" stop-color="#E0322C"/>
+          <stop offset="1" stop-color="#9E1A1E"/>
+        </radialGradient>
+      </defs>
+      <line x1="60" y1="0" x2="60" y2="18" stroke="#6B7591" stroke-width="1.5"/>
+      <rect x="34" y="18" width="52" height="12" rx="3" fill="#0B0E16"/>
+      <ellipse cx="60" cy="95" rx="52" ry="66" fill="url(#lanternFill)"/>
+      <g fill="none" stroke="rgba(70,0,0,0.28)" stroke-width="1.2">
+        <path d="M31.2 40 Q60 45 88.8 40"/><path d="M20.5 52 Q60 57 99.5 52"/>
+        <path d="M13.3 66 Q60 71 106.7 66"/><path d="M9.4 80 Q60 85 110.6 80"/>
+        <path d="M8 95 Q60 100 112 95"/><path d="M9.4 110 Q60 115 110.6 110"/>
+        <path d="M13.3 124 Q60 129 106.7 124"/><path d="M20.5 138 Q60 143 99.5 138"/>
+        <path d="M31.2 150 Q60 155 88.8 150"/>
+      </g>
+      <g font-family="'Shippori Mincho B1', 'Hiragino Mincho ProN', serif" font-weight="600" font-size="25" fill="#1A0B0B" text-anchor="middle">
+        <text x="60" y="76">居</text><text x="60" y="104">酒</text><text x="60" y="132">屋</text>
+      </g>
+      <rect x="34" y="158" width="52" height="12" rx="3" fill="#0B0E16"/>
+      <line x1="60" y1="170" x2="60" y2="180" stroke="#0B0E16" stroke-width="2"/>
+      <rect x="56" y="179" width="8" height="10" rx="2" fill="#D7262B"/>
+    </svg>
   </div>
+  <img class="logo" src="logo.png" alt="Izakaya" width="190" height="48">
+  <p class="kicker" data-t="kicker">Японская кухня · бар</p>
 </header>
 
-<!-- SECTION TABS -->
-<div id="sectionTabs">
-  <button class="section-tab active" data-section="kitchen">КУХНЯ</button>
-  <button class="section-tab" data-section="bar">БАР</button>
-</div>
+<nav class="bar" id="bar">
+  <div class="bar-top">
+    <button class="icon-btn" id="searchOpen" aria-label="Поиск">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+    </button>
+    <div class="segment" role="tablist">
+      <button class="seg-btn active" data-section="kitchen" role="tab" data-t="kitchen">Кухня</button>
+      <button class="seg-btn" data-section="bar" role="tab" data-t="bar">Бар</button>
+    </div>
+    <button class="icon-btn" id="navOpen" aria-label="Все разделы" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg>
+    </button>
+    <div class="search">
+      <input type="search" id="searchInput" placeholder="Поиск по меню" autocomplete="off" enterkeyhint="search" />
+      <button class="icon-btn" id="searchClose" aria-label="Закрыть поиск">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="bar-tabs"><div class="tabs" id="tabs"></div></div>
+</nav>
 
-<!-- CATEGORY NAV -->
-<nav id="categoryNav"></nav>
-
-<!-- MAIN -->
-<main id="mainContent">
-  <div class="empty-state" id="emptyState">
-    <div class="empty-state-icon">🍶</div>
-    <div class="empty-state-text">Ничего не найдено</div>
+<main id="menu">
+  <div class="empty" id="empty">
+    <div class="empty-title" data-t="emptyTitle">Ничего не найдено</div>
+    <div class="empty-text" data-t="emptyText">Попробуйте другое слово или название на английском</div>
   </div>
 </main>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close" aria-label="Закрыть">✕</button>
-  <div class="lightbox-inner">
-    <img class="lightbox-img" id="lightboxImg" src="" alt="">
-    <div class="lightbox-name" id="lightboxName"></div>
-    <div class="lightbox-desc" id="lightboxDesc"></div>
-    <div class="lightbox-price" id="lightboxPrice"></div>
+<footer>
+  <div class="kampai" lang="ja">乾杯</div>
+  <div class="kampai-text" data-t="kampai">Кампай — за встречу!</div>
+</footer>
+
+<button class="cart-bar" id="cartBar">
+  <span class="cart-count" id="cartCount">0</span>
+  <span class="cart-label" data-t="selected">Выбранное</span>
+  <span class="cart-sum" id="cartSum">0 ₸</span>
+</button>
+
+<div class="viewer" id="viewer" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="viewerName">
+  <button class="viewer-close" id="viewerClose" aria-label="Закрыть">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <img id="viewerImg" alt="">
+  <div class="viewer-name" id="viewerName"></div>
+  <div class="viewer-price" id="viewerPrice"></div>
+  <button class="viewer-add" id="viewerAdd"></button>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<div class="nav-sheet" id="navSheet" role="dialog" aria-modal="true" aria-labelledby="navTitle">
+  <div class="nav-head">
+    <h2 class="nav-title" id="navTitle" data-t="sections">Разделы меню</h2>
+    <button class="nav-close" id="navClose" aria-label="Закрыть">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div id="navBody"></div>
+</div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="sheet-band" aria-hidden="true"></div>
+  <div class="sheet-head">
+    <h2 class="sheet-title" id="sheetTitle" data-t="selected">Выбранное</h2>
+    <button class="sheet-clear" id="clearCart" data-t="clear">Очистить</button>
+  </div>
+  <div class="sheet-items" id="sheetItems"></div>
+  <div class="sheet-foot">
+    <div class="total">
+      <span class="total-label" data-t="total">Итого</span>
+      <span class="total-sum" id="totalSum">0 ₸</span>
+    </div>
+    <button class="show-btn" id="showWaiter">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/></svg>
+      <span data-t="show">Показать официанту</span>
+    </button>
+    <p class="show-hint" data-t="hint">Официант оформит заказ по этому списку</p>
   </div>
 </div>
 
-<!-- CART FAB -->
-<button class="cart-fab" id="cartFab" onclick="openCart()">
-  <span class="cart-fab-icon">🛒</span>
-  <div class="cart-fab-info">
-    <span class="cart-fab-count" id="cartFabCount">0 позиций</span>
-    <span class="cart-fab-total" id="cartFabTotal">0 тг</span>
-  </div>
-</button>
-
-<!-- CART OVERLAY + DRAWER -->
-<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
-<div class="cart-drawer" id="cartDrawer">
-  <div class="cart-handle"></div>
-  <div class="cart-header">
-    <span class="cart-title">Выбранное</span>
-    <button class="cart-clear" onclick="clearCart()">Очистить</button>
-  </div>
-  <div class="cart-items" id="cartItems"></div>
-  <div class="cart-footer">
-    <div class="cart-total-row">
-      <span class="cart-total-label">Итого</span>
-      <span class="cart-total-amount" id="cartTotalAmount">0 тг</span>
-    </div>
-    <button class="cart-send" onclick="sendToWhatsApp()">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      <span>Отправить заказ в WhatsApp</span>
+<!-- экран для официанта: всегда по-русски -->
+<div class="waiter" id="waiter" role="dialog" aria-modal="true" aria-labelledby="waiterTitle" lang="ru">
+  <div class="waiter-band" aria-hidden="true"></div>
+  <div class="waiter-inner">
+    <button class="waiter-back" id="waiterBack">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+      <span data-t="back">Назад</span>
     </button>
+    <h2 class="waiter-title" id="waiterTitle">Заказ</h2>
+    <div class="waiter-sub" id="waiterSub"></div>
+    <div id="waiterList"></div>
+    <div class="waiter-total">
+      <span class="waiter-total-label">Итого</span>
+      <span class="waiter-total-sum" id="waiterTotal"></span>
+    </div>
   </div>
 </div>
 
@@ -1242,219 +1243,323 @@ const menuData = [
 ];
 
 // ─────────────────────────────
-//  STATE
+//  ГРУППЫ: 55 разделов данных → 24 раздела навигации.
+//  Порядок групп = порядок на странице. kanji — табличка о-синагаки у заголовка.
+//  Без name — берётся название единственного раздела.
 // ─────────────────────────────
-const WHATSAPP_PHONE = '7XXXXXXXXXX'; // номер заведения для заказов, формат: 7701XXXXXXX
+const GROUPS = [
+  // кухня
+  { id: 'company', section: 'kitchen', kanji: '盛り合わせ', name: 'На компанию', name_kz: 'Компанияға', name_en: 'To share', cats: ['sets', 'banquet'] },
+  { id: 'sushi', section: 'kitchen', kanji: '寿司', name: 'Суши и роллы', name_kz: 'Суши мен роллдар', name_en: 'Sushi & Rolls', cats: ['rolls', 'tempura_rolls', 'warm_rolls', 'hosomaki', 'nigiri', 'sashimi'] },
+  { id: 'salads', section: 'kitchen', kanji: 'サラダ', cats: ['salads'] },
+  { id: 'starters', section: 'kitchen', kanji: '前菜', name: 'Закуски', name_kz: 'Тіскебасарлар', name_en: 'Starters', cats: ['cold_appetizers', 'asian_snacks', 'hot_appetizers'] },
+  { id: 'soups', section: 'kitchen', kanji: '汁物', cats: ['soups'] },
+  { id: 'mains', section: 'kitchen', kanji: '主菜', name: 'Горячие блюда', name_kz: 'Ыстық тағамдар', name_en: 'Main Dishes', cats: ['hot_dishes', 'wok'] },
+  { id: 'grill', section: 'kitchen', kanji: '焼き物', name: 'Гриль и рыба', name_kz: 'Гриль және балық', name_en: 'Grill & Fish', cats: ['grill', 'fish'] },
+  { id: 'rice', section: 'kitchen', kanji: 'ご飯・麺', cats: ['rice_noodles'] },
+  { id: 'bento', section: 'kitchen', kanji: '弁当', cats: ['bento'] },
+  { id: 'desserts', section: 'kitchen', kanji: '甘味', cats: ['desserts'] },
+  { id: 'kids', section: 'kitchen', kanji: 'お子様', cats: ['kids'] },
+  { id: 'sides', section: 'kitchen', kanji: '付け合わせ', name: 'Гарниры и хлеб', name_kz: 'Гарнирлер мен нан', name_en: 'Sides & Bread', cats: ['garnish', 'bakery'] },
+  { id: 'extras', section: 'kitchen', kanji: '追加', name: 'Соусы и добавки', name_kz: 'Соустар мен қоспалар', name_en: 'Sauces & Extras', cats: ['sauces', 'extras'] },
+  // бар
+  { id: 'cocktails', section: 'bar', kanji: 'カクテル', name: 'Коктейли', name_kz: 'Коктейльдер', name_en: 'Cocktails', cats: ['cocktails', 'cocktails_na', 'shots'] },
+  { id: 'japan', section: 'bar', kanji: '日本酒', name: 'Из Японии', name_kz: 'Жапониядан', name_en: 'From Japan', cats: ['sake', 'whisky_japan'] },
+  { id: 'beer', section: 'bar', kanji: 'ビール', name: 'Пиво', name_kz: 'Сыра', name_en: 'Beer', cats: ['beer', 'beer_snacks'] },
+  { id: 'wine', section: 'bar', kanji: 'ワイン', name: 'Вино и игристое', name_kz: 'Шарап және шампан', name_en: 'Wine & Sparkling', cats: ['wine', 'wine_glass', 'sparkling'] },
+  { id: 'whisky', section: 'bar', kanji: 'ウイスキー', name: 'Виски', name_kz: 'Виски', name_en: 'Whisky', cats: ['whisky_single', 'whisky_scotch', 'jameson', 'bourbon'] },
+  { id: 'cognac', section: 'bar', kanji: 'ブランデー', name: 'Коньяк', name_kz: 'Коньяк', name_en: 'Cognac & Brandy', cats: ['cognac_fr', 'cognac_arm'] },
+  { id: 'spirits', section: 'bar', kanji: '蒸留酒', name: 'Водка, джин, текила, ром', name_kz: 'Арақ, джин, текила, ром', name_en: 'Vodka, Gin, Tequila, Rum', cats: ['vodka', 'gin', 'tequila', 'rum_cuba', 'rum_pr'] },
+  { id: 'liqueurs', section: 'bar', kanji: 'リキュール', name: 'Ликёры и вермуты', name_kz: 'Ликерлер мен вермуттар', name_en: 'Liqueurs & Vermouth', cats: ['liqueurs', 'vermouth'] },
+  { id: 'soft', section: 'bar', kanji: '清涼飲料', name: 'Безалкогольное', name_kz: 'Алкогольсіз', name_en: 'Soft Drinks', cats: ['lemonades', 'cold_drinks', 'milkshakes', 'fresh'] },
+  { id: 'tea', section: 'bar', kanji: 'お茶', name: 'Чай', name_kz: 'Шай', name_en: 'Tea', cats: ['tea', 'tea_add'] },
+  { id: 'coffee', section: 'bar', kanji: '珈琲', cats: ['coffee'] },
+];
 
-let currentLang = localStorage.getItem('izakaya_lang') || 'ru';
-let currentSection = 'kitchen';
-let searchQuery = '';
-let cart = loadCart();
+// не показываем на сайте (реклама табака) — официант предложит сам
+const HIDDEN_CATS = ['cigarettes'];
 
-const SECTION_LABELS = {
-  kitchen: { ru: 'КУХНЯ', kz: 'АС ҮЙІ', en: 'KITCHEN' },
-  bar: { ru: 'БАР', kz: 'БАР', en: 'BAR' },
+const UI = {
+  ru: { kicker: 'Японская кухня · бар', kitchen: 'Кухня', bar: 'Бар', search: 'Поиск по меню', emptyTitle: 'Ничего не найдено', emptyText: 'Попробуйте другое слово или название на английском', kampai: 'Кампай — за встречу!', selected: 'Выбранное', clear: 'Очистить', total: 'Итого', show: 'Показать официанту', hint: 'Официант оформит заказ по этому списку', back: 'Назад', add: 'Добавить', sections: 'Разделы меню' },
+  kz: { kicker: 'Жапон асханасы · бар', kitchen: 'Асхана', bar: 'Бар', search: 'Мәзірден іздеу', emptyTitle: 'Ештеңе табылмады', emptyText: 'Басқа сөзбен немесе ағылшынша іздеп көріңіз', kampai: 'Кампай — кездесу үшін!', selected: 'Таңдалғандар', clear: 'Тазалау', total: 'Барлығы', show: 'Даяшыға көрсету', hint: 'Даяшы осы тізім бойынша тапсырыс береді', back: 'Артқа', add: 'Қосу', sections: 'Мәзір бөлімдері' },
+  en: { kicker: 'Japanese kitchen · bar', kitchen: 'Kitchen', bar: 'Bar', search: 'Search the menu', emptyTitle: 'Nothing found', emptyText: 'Try another word or the name in Russian', kampai: 'Kampai — cheers!', selected: 'Your selection', clear: 'Clear', total: 'Total', show: 'Show to your waiter', hint: 'Your waiter will place the order from this list', back: 'Back', add: 'Add', sections: 'Menu sections' },
 };
 
-function loadCart() {
-  try { return JSON.parse(localStorage.getItem('izakaya_cart')) || []; } catch (e) { return []; }
-}
-function saveCart() {
-  localStorage.setItem('izakaya_cart', JSON.stringify(cart));
+// ─────────────────────────────
+//  STATE
+// ─────────────────────────────
+function store(key, value) {
+  try {
+    if (value === undefined) return localStorage.getItem(key);
+    localStorage.setItem(key, value);
+  } catch (e) { return null; }
 }
 
-// ─────────────────────────────
-//  INIT
-// ─────────────────────────────
+let currentLang = store('izakaya_lang') || 'ru';
+let currentSection = 'kitchen';
+let searchQuery = '';
+let cart = loadCart(); // [{key, name, cat, price, qty}], key = id раздела + индекс блюда
+
+const $ = (id) => document.getElementById(id);
+const t = (k) => (UI[currentLang] || UI.ru)[k];
+const smoothScroll = () => matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+const catById = Object.fromEntries(menuData.map(c => [c.id, c]));
+
 document.addEventListener('DOMContentLoaded', () => {
-  buildCategoryNav();
   renderMenu();
   initSearch();
   initLang();
-  initSectionTabs();
-  initScrollSpy();
+  initSections();
   initCart();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  $('navOpen').addEventListener('click', openNav);
+  $('navClose').addEventListener('click', closeNav);
   syncLangUI();
   updateCartUI();
 });
 
 // ─────────────────────────────
-//  HELPERS
+//  NAMES
 // ─────────────────────────────
-function getCatName(cat) {
-  if (currentLang === 'kz') return cat.name_kz || cat.name;
-  if (currentLang === 'en') return cat.name_en || cat.name;
-  return cat.name;
+function localName(obj) {
+  if (currentLang === 'kz') return obj.name_kz || obj.name;
+  if (currentLang === 'en') return obj.name_en || obj.name;
+  return obj.name;
 }
-function getItemName(item) {
-  if (currentLang === 'kz') return item.name_kz || item.name;
-  if (currentLang === 'en') return item.name_en || item.name;
-  return item.name;
+const groupName = (g) => g.name ? localName(g) : localName(catById[g.cats[0]]);
+const groupCats = (g) => g.cats.filter(id => catById[id] && !HIDDEN_CATS.includes(id)).map(id => catById[id]);
+const groupCount = (g) => groupCats(g).reduce((s, c) => s + c.items.length, 0);
+
+function formatNum(n) { return n.toLocaleString('ru-RU'); }
+function formatPrice(n) { return formatNum(n) + ' ₸'; }
+function portion(s) { return (s || '').replace(/(\d)\s*ml\b/i, '$1 мл').replace(/(\d)\s*шт\b/, '$1 шт'); }
+
+function plural(n, a, b, c) {
+  const m = Math.abs(n) % 100, m1 = m % 10;
+  if (m > 10 && m < 20) return c;
+  if (m1 > 1 && m1 < 5) return b;
+  if (m1 === 1) return a;
+  return c;
 }
-function formatPrice(price) {
-  return price.toLocaleString('ru-RU') + ' тг';
+function countLabel(n) {
+  if (currentLang === 'en') return n + (n === 1 ? ' item' : ' items');
+  if (currentLang === 'kz') return n + ' позиция';
+  return n + ' ' + plural(n, 'позиция', 'позиции', 'позиций');
 }
 
 // ─────────────────────────────
-//  CATEGORY NAV
+//  KITCHEN / BAR
 // ─────────────────────────────
-function buildCategoryNav() {
-  const nav = document.getElementById('categoryNav');
-  nav.innerHTML = '';
-  menuData.filter(c => c.section === currentSection).forEach((cat, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'cat-btn' + (i === 0 ? ' active' : '');
-    btn.textContent = getCatName(cat);
-    btn.dataset.id = cat.id;
-    btn.onclick = () => scrollToCategory(cat.id);
-    nav.appendChild(btn);
+function initSections() {
+  document.querySelectorAll('.seg-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchSection(btn.dataset.section, true));
   });
 }
 
-// ─────────────────────────────
-//  SECTION TABS (Кухня / Бар)
-// ─────────────────────────────
-function initSectionTabs() {
-  document.querySelectorAll('.section-tab').forEach(btn => {
-    btn.addEventListener('click', () => switchSection(btn.dataset.section));
-  });
-}
-
-function switchSection(section) {
+function switchSection(section, toTop) {
   if (section === currentSection) return;
   currentSection = section;
-  document.querySelectorAll('.section-tab').forEach(b =>
-    b.classList.toggle('active', b.dataset.section === section));
-  buildCategoryNav();
+  document.querySelectorAll('.seg-btn').forEach(b => b.classList.toggle('active', b.dataset.section === section));
   renderMenu();
-  window.scrollTo({ top: 0 });
+  // к началу меню, если ушли ниже
+  const barTop = $('bar').getBoundingClientRect().top + window.scrollY;
+  if (toTop && window.scrollY > barTop) window.scrollTo({ top: barTop });
 }
 
-function syncSectionLabels() {
-  document.querySelectorAll('.section-tab').forEach(b => {
-    const l = SECTION_LABELS[b.dataset.section];
-    b.textContent = l[currentLang] || l.ru;
+// ─────────────────────────────
+//  TABS + ACTIVE GROUP
+// ─────────────────────────────
+function buildTabs() {
+  const tabs = $('tabs');
+  tabs.innerHTML = '';
+  GROUPS.filter(g => g.section === currentSection && groupCount(g)).forEach(g => {
+    const btn = document.createElement('button');
+    btn.className = 'tab';
+    btn.textContent = groupName(g);
+    btn.dataset.id = g.id;
+    btn.onclick = () => jumpTo(g.id);
+    tabs.appendChild(btn);
   });
 }
 
-function scrollToCategory(id) {
-  const el = document.getElementById('cat-' + id);
+function setActiveTab(id) {
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.dataset.id === id));
+  const btn = document.querySelector(`.tab[data-id="${id}"]`);
+  const tabs = $('tabs');
+  if (!btn) return;
+  const b = btn.getBoundingClientRect(), r = tabs.getBoundingClientRect();
+  tabs.scrollTo({ left: tabs.scrollLeft + b.left - r.left - r.width / 2 + b.width / 2, behavior: 'smooth' });
+}
+
+// активная группа — последняя, чей верх ушёл под липкую панель; внизу страницы — последняя
+let activeGroup = null;
+function updateActiveTab() {
+  if (navLock) return;
+  const groups = [...document.querySelectorAll('.grp:not(.hidden)')];
+  if (!groups.length) return;
+  const line = $('bar').offsetHeight + 8;
+  const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+  let current = groups[0];
+  if (atBottom) current = groups[groups.length - 1];
+  else groups.forEach(el => { if (el.getBoundingClientRect().top <= line) current = el; });
+  const id = current.id.replace('grp-', '');
+  if (id !== activeGroup) { activeGroup = id; setActiveTab(id); }
+}
+
+// переход: вкладка сразу на цели, без «пробегания» промежуточных
+let navLock = false, lockTimer = null;
+function releaseLockSoon(ms) {
+  clearTimeout(lockTimer);
+  lockTimer = setTimeout(() => { navLock = false; }, ms);
+}
+function jumpTo(id) {
+  const g = GROUPS.find(x => x.id === id);
+  if (g && g.section !== currentSection) switchSection(g.section, false);
+  const el = $('grp-' + id);
   if (!el) return;
-  const top = el.getBoundingClientRect().top + window.scrollY - 60 - 44 - 52 - 12;
-  window.scrollTo({ top, behavior: 'smooth' });
+  navLock = true;
+  activeGroup = id;
+  setActiveTab(id);
+  el.scrollIntoView({ block: 'start', behavior: smoothScroll() });
+  releaseLockSoon(500);
+}
+function onScroll() {
+  if (navLock) releaseLockSoon(150);
+  else updateActiveTab();
 }
 
-function buildCategoryNavLabels() {
-  document.querySelectorAll('.cat-btn').forEach(btn => {
-    const cat = menuData.find(c => c.id === btn.dataset.id);
-    if (cat) btn.textContent = getCatName(cat);
-  });
-}
-
-let spyObserver = null;
-
-function initScrollSpy() {
-  spyObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id.replace('cat-', '');
-        document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.dataset.id === id));
-        const activeBtn = document.querySelector(`.cat-btn[data-id="${id}"]`);
-        if (activeBtn) activeBtn.scrollIntoView({ block: 'nearest', inline: 'center' });
-      }
+// ─────────────────────────────
+//  ALL SECTIONS SHEET
+// ─────────────────────────────
+function openNav() {
+  const body = $('navBody');
+  body.innerHTML = '';
+  ['kitchen', 'bar'].forEach(section => {
+    const h = document.createElement('div');
+    h.className = 'nav-section';
+    h.textContent = t(section);
+    body.appendChild(h);
+    const grid = document.createElement('div');
+    grid.className = 'nav-grid';
+    GROUPS.filter(g => g.section === section && groupCount(g)).forEach(g => {
+      const btn = document.createElement('button');
+      btn.className = 'nav-item' + (g.id === activeGroup && section === currentSection ? ' active' : '');
+      btn.innerHTML = `<span class="nav-item-name">${groupName(g)}</span><span class="nav-item-count">${countLabel(groupCount(g))}</span>`;
+      btn.onclick = () => { closeNav(); jumpTo(g.id); };
+      grid.appendChild(btn);
     });
-  }, { rootMargin: '-100px 0px -60% 0px' });
-  observeSections();
+    body.appendChild(grid);
+  });
+  $('overlay').classList.add('open');
+  $('navSheet').classList.add('open');
 }
 
-// Секции пересоздаются на каждый renderMenu — переподписываем наблюдатель
-function observeSections() {
-  if (!spyObserver) return;
-  spyObserver.disconnect();
-  menuData.filter(c => c.section === currentSection).forEach(cat => {
-    const el = document.getElementById('cat-' + cat.id);
-    if (el) spyObserver.observe(el);
-  });
+function closeNav() {
+  $('navSheet').classList.remove('open');
+  if (!$('sheet').classList.contains('open')) $('overlay').classList.remove('open');
 }
 
 // ─────────────────────────────
 //  RENDER MENU
 // ─────────────────────────────
+const PLUS = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 1.5v11M1.5 7h11"/></svg>';
+
 function renderMenu() {
-  const main = document.getElementById('mainContent');
-  const emptyState = document.getElementById('emptyState');
+  const main = $('menu');
+  const empty = $('empty');
   let totalVisible = 0;
-  main.querySelectorAll('.cat-section').forEach(el => el.remove());
+  main.querySelectorAll('.grp').forEach(el => el.remove());
 
-  menuData.filter(c => c.section === currentSection).forEach(cat => {
-    const items = cat.items.map((item, idx) => ({ item, idx })).filter(({ item }) => matchesSearch(item));
-    const section = document.createElement('div');
-    section.className = 'cat-section' + (items.length === 0 ? ' hidden' : '');
-    section.id = 'cat-' + cat.id;
+  // при поиске — по всему меню, иначе только кухня или бар
+  GROUPS.filter(g => searchQuery || g.section === currentSection).forEach(g => {
+    const cats = groupCats(g)
+      .map(cat => ({ cat, items: cat.items.map((item, idx) => ({ item, idx })).filter(({ item }) => matchesSearch(item, cat, g)) }))
+      .filter(c => c.items.length);
+    const section = document.createElement('section');
+    section.className = 'grp' + (cats.length ? '' : ' hidden');
+    section.id = 'grp-' + g.id;
+    const single = groupCats(g).length === 1;
+    const meta = single && groupCats(g)[0].subtitle ? portion(groupCats(g)[0].subtitle) : countLabel(groupCount(g));
+    section.innerHTML = `
+      <header class="grp-head">
+        <div class="tag" aria-hidden="true"><span class="tag-kanji" lang="ja">${g.kanji}</span><span class="tag-seal"></span></div>
+        <div class="grp-titles"><h2 class="grp-name">${groupName(g)}</h2><div class="grp-meta">${meta}</div></div>
+      </header>`;
 
-    const title = document.createElement('div');
-    title.className = 'cat-title';
-    title.textContent = getCatName(cat);
-    section.appendChild(title);
-
-    if (cat.subtitle) {
-      const sub = document.createElement('div');
-      sub.className = 'cat-subtitle';
-      sub.textContent = cat.subtitle;
-      section.appendChild(sub);
-    }
-
-    const list = document.createElement('div');
-    list.className = 'items-list';
-
-    items.forEach(({ item, idx }) => {
-      totalVisible++;
-      const card = document.createElement('div');
-      card.className = 'item-card';
-      const key = cat.id + '_' + idx;
-      const inCart = cart.some(e => e.key === key);
-      const rightHtml = `
-        <div class="item-right">
-          <div class="item-price">${formatPrice(item.price)}</div>
-          <button class="add-btn${inCart ? ' in-cart' : ''}" data-key="${key}" data-name="${item.name}" data-cat="${cat.name}" data-price="${item.price}">+</button>
-        </div>`;
-      card.innerHTML = `
-        ${item.img ? `<img class="item-thumb" src="${item.img}" alt="${item.name}" loading="lazy" data-cat-id="${cat.id}" data-idx="${idx}">` : ''}
-        <div class="item-info">
-          <div class="item-name">${getItemName(item)}</div>
-          ${item.desc ? `<div class="item-desc">${item.desc}</div>` : ''}
-        </div>
-        ${rightHtml}`;
-      list.appendChild(card);
+    cats.forEach(({ cat, items }) => {
+      if (!single) {
+        const sub = document.createElement('div');
+        sub.className = 'sub-head';
+        sub.innerHTML = `<h3 class="sub-name">${localName(cat)}</h3>${cat.subtitle ? `<span class="sub-portion">${portion(cat.subtitle)}</span>` : ''}`;
+        section.appendChild(sub);
+      }
+      const list = document.createElement('ul');
+      list.className = 'items';
+      items.forEach(({ item, idx }) => {
+        totalVisible++;
+        const key = cat.id + '_' + idx;
+        const photo = g.section === 'kitchen' && item.img;
+        const li = document.createElement('li');
+        li.className = 'dish' + (photo ? ' with-photo' : '') + (g.section === 'bar' ? ' drink' : '');
+        li.innerHTML = `
+          ${photo ? `<button class="dish-photo" data-photo="${item.img}" aria-label="${localName(item)}"><img src="${item.img}" alt="" loading="lazy"></button>` : ''}
+          <div class="dish-line">
+            <h4 class="dish-name">${localName(item)}</h4>
+            <span class="leader" aria-hidden="true"></span>
+            <span class="dish-price">${formatNum(item.price)}<small>₸</small></span>
+            <button class="add" data-key="${key}" data-name="${item.name}" data-cat="${cat.name}" data-price="${item.price}" aria-label="${t('add')}: ${localName(item)}"></button>
+          </div>
+          ${item.desc ? `<p class="dish-desc">${item.desc}</p>` : ''}`;
+        list.appendChild(li);
+      });
+      section.appendChild(list);
     });
-
-    section.appendChild(list);
-    main.insertBefore(section, emptyState);
+    main.insertBefore(section, empty);
   });
 
-  emptyState.classList.toggle('visible', totalVisible === 0);
-  observeSections();
+  empty.classList.toggle('visible', totalVisible === 0);
+  buildTabs();
+  syncAddButtons();
+  activeGroup = null;
+  updateActiveTab();
 }
 
-function matchesSearch(item) {
+function syncAddButtons() {
+  document.querySelectorAll('.add').forEach(btn => {
+    const entry = cart.find(e => e.key === btn.dataset.key);
+    btn.classList.toggle('in-cart', !!entry);
+    btn.innerHTML = entry ? entry.qty : PLUS;
+  });
+}
+
+function matchesSearch(item, cat, g) {
   if (!searchQuery) return true;
-  const q = searchQuery.toLowerCase();
-  return item.name.toLowerCase().includes(q) ||
-    (item.name_kz || '').toLowerCase().includes(q) ||
-    (item.name_en || '').toLowerCase().includes(q) ||
-    (item.desc || '').toLowerCase().includes(q);
+  const norm = (x) => (x || '').toLowerCase().replace(/ё/g, 'е');
+  // отрезаем окончание: «креветки» находит «креветками», «роллы» — «ролл»
+  const q = norm(searchQuery).split(/\s+/).map(w => w.length >= 5 ? w.replace(/[аяыиоеуюьй]$/, '') : w).join(' ');
+  return [item.name, item.name_kz, item.name_en, item.desc, cat.name, cat.name_kz, cat.name_en, g.name, g.name_en]
+    .some(x => norm(x).includes(q));
 }
 
 // ─────────────────────────────
 //  SEARCH
 // ─────────────────────────────
 function initSearch() {
-  document.getElementById('searchToggle').addEventListener('click', () => {
-    const bar = document.getElementById('searchBar');
-    bar.classList.toggle('visible');
-    if (bar.classList.contains('visible')) document.getElementById('searchInput').focus();
+  const bar = $('bar');
+  const input = $('searchInput');
+  $('searchOpen').addEventListener('click', () => {
+    bar.classList.add('searching');
+    input.focus();
+    const top = bar.getBoundingClientRect().top + window.scrollY;
+    if (window.scrollY < top) window.scrollTo({ top });
   });
-  document.getElementById('searchInput').addEventListener('input', (e) => {
+  $('searchClose').addEventListener('click', () => {
+    bar.classList.remove('searching');
+    input.value = '';
+    searchQuery = '';
+    renderMenu();
+  });
+  input.addEventListener('input', (e) => {
     searchQuery = e.target.value.trim();
     renderMenu();
   });
@@ -1467,113 +1572,219 @@ function initLang() {
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       currentLang = btn.dataset.lang;
-      localStorage.setItem('izakaya_lang', currentLang);
+      store('izakaya_lang', currentLang);
       syncLangUI();
       renderMenu();
-      buildCategoryNavLabels();
+      updateCartUI();
     });
   });
 }
 
 function syncLangUI() {
+  document.documentElement.lang = currentLang === 'kz' ? 'kk' : currentLang;
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
-  document.getElementById('searchInput').placeholder =
-    currentLang === 'en' ? 'Search menu...' : currentLang === 'kz' ? 'Мәзірден іздеу...' : 'Поиск по меню...';
-  syncSectionLabels();
+  document.querySelectorAll('[data-t]').forEach(el => { el.textContent = t(el.dataset.t); });
+  $('searchInput').placeholder = t('search');
 }
 
 // ─────────────────────────────
 //  CART
 // ─────────────────────────────
-function plural(n, a, b, c) {
-  const m = n % 10;
-  if (n % 100 >= 11 && n % 100 <= 14) return c;
-  if (m === 1) return a; if (m >= 2 && m <= 4) return b; return c;
+function loadCart() {
+  try { return JSON.parse(store('izakaya_cart')) || []; } catch (e) { return []; }
 }
-function cartTotal() { return cart.reduce((s, e) => s + e.price * e.qty, 0); }
-function cartCount() { return cart.reduce((s, e) => s + e.qty, 0); }
+function saveCart() {
+  store('izakaya_cart', JSON.stringify(cart));
+}
 
 function addToCart(key, name, price, cat) {
   const existing = cart.find(e => e.key === key);
   if (existing) existing.qty++;
   else cart.push({ key, name, cat, price, qty: 1 });
-  saveCart(); updateCartUI(); renderMenu();
+  saveCart();
+  updateCartUI();
 }
 
 function changeQty(key, delta) {
-  const entry = cart.find(e => e.key === key);
-  if (!entry) return;
-  entry.qty += delta;
-  if (entry.qty <= 0) cart = cart.filter(e => e.key !== key);
-  saveCart(); updateCartUI(); renderCartItems(); renderMenu();
+  const idx = cart.findIndex(e => e.key === key);
+  if (idx === -1) return;
+  cart[idx].qty += delta;
+  if (cart[idx].qty <= 0) cart.splice(idx, 1);
+  saveCart();
+  updateCartUI();
+  renderCartItems();
   if (cart.length === 0) closeCart();
 }
 
 function clearCart() {
-  cart = []; saveCart(); updateCartUI(); renderMenu(); closeCart();
+  cart = [];
+  saveCart();
+  updateCartUI();
+  closeCart();
+  closeWaiter();
 }
 
-function sendToWhatsApp() {
-  if (cart.length === 0) return;
-  const lines = cart.map(e => `• ${e.name}${e.cat ? ' (' + e.cat + ')' : ''} ×${e.qty} — ${(e.price * e.qty).toLocaleString('ru-RU')} тг`);
-  const text = 'Заказ Izakaya:\n' + lines.join('\n') + '\n\nИтого: ' + cartTotal().toLocaleString('ru-RU') + ' тг';
-  window.open('https://wa.me/' + WHATSAPP_PHONE + '?text=' + encodeURIComponent(text), '_blank');
+// ключ корзины → блюдо, его раздел, группа и место в меню
+function lookup(key) {
+  const i = key.lastIndexOf('_');
+  const cat = catById[key.slice(0, i)];
+  const idx = Number(key.slice(i + 1));
+  const item = cat && cat.items[idx];
+  if (!item) return null;
+  const gi = GROUPS.findIndex(g => g.cats.includes(cat.id));
+  const group = GROUPS[gi];
+  return { cat, item, group, order: gi * 100000 + (group ? group.cats.indexOf(cat.id) : 0) * 1000 + idx };
+}
+
+function openCart() {
+  renderCartItems();
+  $('overlay').classList.add('open');
+  $('sheet').classList.add('open');
+}
+
+function closeCart() {
+  $('overlay').classList.remove('open');
+  $('sheet').classList.remove('open');
 }
 
 function updateCartUI() {
-  const count = cartCount();
-  document.getElementById('cartFab').classList.toggle('visible', count > 0);
-  document.getElementById('cartFabCount').textContent = count + ' ' + plural(count, 'позиция', 'позиции', 'позиций');
-  document.getElementById('cartFabTotal').textContent = cartTotal().toLocaleString('ru-RU') + ' тг';
+  const totalQty = cart.reduce((s, e) => s + e.qty, 0);
+  const totalSum = cart.reduce((s, e) => s + e.price * e.qty, 0);
+  $('cartCount').textContent = totalQty;
+  $('cartSum').textContent = formatPrice(totalSum);
+  $('cartBar').classList.toggle('visible', totalQty > 0);
+  syncAddButtons();
 }
 
 function renderCartItems() {
-  document.getElementById('cartItems').innerHTML = cart.map(e => `
-    <div class="cart-row">
-      <div class="cart-row-info">
-        <div class="cart-row-name">${e.name}</div>
-        <div class="cart-row-price">${(e.price * e.qty).toLocaleString('ru-RU')} тг</div>
+  const container = $('sheetItems');
+  container.innerHTML = '';
+  cart.forEach(({ key, name, price, qty }) => {
+    const ref = lookup(key);
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.innerHTML = `
+      <div class="row-info">
+        <div class="row-name">${ref ? localName(ref.item) : name}</div>
+        <div class="row-price">${formatPrice(price)} × ${qty}</div>
       </div>
-      <div class="cart-qty">
-        <button class="qty-btn" onclick="changeQty('${e.key}', -1)">−</button>
-        <span class="qty-num">${e.qty}</span>
-        <button class="qty-btn" onclick="changeQty('${e.key}', 1)">+</button>
-      </div>
-    </div>`).join('');
-  document.getElementById('cartTotalAmount').textContent = cartTotal().toLocaleString('ru-RU') + ' тг';
+      <div class="qty">
+        <button class="qty-btn" data-key="${key}" data-delta="-1" aria-label="−1">−</button>
+        <span class="qty-num">${qty}</span>
+        <button class="qty-btn" data-key="${key}" data-delta="1" aria-label="+1">+</button>
+      </div>`;
+    container.appendChild(row);
+  });
+  $('totalSum').textContent = formatPrice(cart.reduce((s, e) => s + e.price * e.qty, 0));
 }
 
-function openCart() { renderCartItems(); document.getElementById('cartOverlay').classList.add('open'); document.getElementById('cartDrawer').classList.add('open'); }
-function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); document.getElementById('cartDrawer').classList.remove('open'); }
+// ─────────────────────────────
+//  WAITER SCREEN
+// ─────────────────────────────
+let wakeLock = null;
+
+function openWaiter() {
+  const entries = cart
+    .map(e => ({ ...e, ref: lookup(e.key) }))
+    .sort((a, b) => (a.ref ? a.ref.order : 1e9) - (b.ref ? b.ref.order : 1e9));
+  const list = $('waiterList');
+  list.innerHTML = '';
+  let header = null;
+  entries.forEach(e => {
+    const title = e.ref ? e.ref.cat.name : e.cat; // по разделам данных: «Роллы», «Нигири», «Виски»
+    if (title !== header) {
+      header = title;
+      const h = document.createElement('div');
+      h.className = 'waiter-group';
+      h.textContent = title || '';
+      list.appendChild(h);
+    }
+    const row = document.createElement('div');
+    row.className = 'waiter-row';
+    row.innerHTML = `
+      <span class="waiter-qty">${e.qty}×</span>
+      <span class="waiter-name">${e.ref ? e.ref.item.name : e.name}</span>
+      <span class="waiter-sum">${formatPrice(e.price * e.qty)}</span>`;
+    list.appendChild(row);
+  });
+  const qty = cart.reduce((s, e) => s + e.qty, 0);
+  $('waiterSub').textContent = 'Izakaya · ' + qty + ' ' + plural(qty, 'позиция', 'позиции', 'позиций');
+  $('waiterTotal').textContent = formatPrice(cart.reduce((s, e) => s + e.price * e.qty, 0));
+  $('waiter').classList.add('open');
+  $('waiter').scrollTop = 0;
+  // экран не гаснет, пока официант записывает
+  navigator.wakeLock?.request('screen').then(l => { wakeLock = l; }).catch(() => {});
+}
+
+function closeWaiter() {
+  $('waiter').classList.remove('open');
+  wakeLock?.release().catch(() => {});
+  wakeLock = null;
+}
+
+// ─────────────────────────────
+//  PHOTO VIEWER
+// ─────────────────────────────
+let viewerBtn = null;
+
+function openViewer(photoBtn) {
+  const li = photoBtn.closest('.dish');
+  viewerBtn = li.querySelector('.add');
+  $('viewerImg').src = photoBtn.dataset.photo;
+  $('viewerName').textContent = li.querySelector('.dish-name').textContent;
+  $('viewerPrice').textContent = formatPrice(Number(viewerBtn.dataset.price));
+  syncViewerAdd();
+  $('viewer').classList.add('open');
+  $('viewer').focus({ preventScroll: true });
+}
+
+function closeViewer() {
+  if (!$('viewer').classList.contains('open')) return;
+  $('viewer').classList.remove('open');
+  viewerBtn?.closest('.dish')?.querySelector('.dish-photo')?.focus();
+  viewerBtn = null;
+}
+
+function syncViewerAdd() {
+  const entry = viewerBtn && cart.find(e => e.key === viewerBtn.dataset.key);
+  $('viewerAdd').innerHTML = `${PLUS.replace('<svg', '<svg width="14" height="14"')} ${t('add')}` +
+    (entry ? ` <span class="cnt">${entry.qty}</span>` : '');
+}
 
 function initCart() {
-  document.getElementById('mainContent').addEventListener('click', (e) => {
-    const addBtn = e.target.closest('.add-btn');
-    if (addBtn) { addToCart(addBtn.dataset.key, addBtn.dataset.name, Number(addBtn.dataset.price), addBtn.dataset.cat); return; }
-    const thumb = e.target.closest('.item-thumb');
-    if (thumb) {
-      const cat = menuData.find(c => c.id === thumb.dataset.catId);
-      const item = cat && cat.items[thumb.dataset.idx];
-      if (item) openLightbox(item);
-    }
+  $('menu').addEventListener('click', (e) => {
+    const photo = e.target.closest('.dish-photo');
+    if (photo) return openViewer(photo);
+    const btn = e.target.closest('.add');
+    if (!btn) return;
+    addToCart(btn.dataset.key, btn.dataset.name, Number(btn.dataset.price), btn.dataset.cat);
+    btn.classList.remove('pop');
+    void btn.offsetWidth;
+    btn.classList.add('pop');
   });
-}
-
-// ─────────────────────────────
-//  LIGHTBOX (просмотр фото)
-// ─────────────────────────────
-function openLightbox(item) {
-  const img = document.getElementById('lightboxImg');
-  img.src = item.img; img.alt = item.name;
-  document.getElementById('lightboxName').textContent = getItemName(item);
-  const desc = document.getElementById('lightboxDesc');
-  desc.textContent = item.desc || '';
-  desc.style.display = item.desc ? '' : 'none';
-  document.getElementById('lightboxPrice').textContent = formatPrice(item.price);
-  document.getElementById('lightbox').classList.add('open');
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
+  $('sheetItems').addEventListener('click', (e) => {
+    const btn = e.target.closest('.qty-btn');
+    if (btn) changeQty(btn.dataset.key, Number(btn.dataset.delta));
+  });
+  $('cartBar').addEventListener('click', openCart);
+  $('overlay').addEventListener('click', () => { closeCart(); closeNav(); });
+  $('clearCart').addEventListener('click', clearCart);
+  $('showWaiter').addEventListener('click', openWaiter);
+  $('waiterBack').addEventListener('click', closeWaiter);
+  $('viewerAdd').addEventListener('click', () => {
+    if (!viewerBtn) return;
+    addToCart(viewerBtn.dataset.key, viewerBtn.dataset.name, Number(viewerBtn.dataset.price), viewerBtn.dataset.cat);
+    syncViewerAdd();
+  });
+  $('viewerClose').addEventListener('click', closeViewer);
+  $('viewer').addEventListener('click', (e) => { if (e.target.id === 'viewer') closeViewer(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if ($('waiter').classList.contains('open')) return closeWaiter();
+    closeViewer();
+    closeCart();
+    closeNav();
+  });
 }
 </script>
 </body>
