@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Izakaya — Меню</title>
-  <meta name="description" content="Izakaya — японский бар. Меню: саке, японский виски, коктейли, вино и напитки." />
+  <meta name="description" content="Izakaya — японский бар. Меню: роллы и суши, супы, гриль, горячие блюда, саке, японский виски, коктейли, вино и напитки." />
   <meta name="theme-color" content="#0a0a0f" />
   <meta property="og:title" content="Izakaya — Меню" />
-  <meta property="og:description" content="Японский бар. Саке, японский виски, коктейли, вино и напитки." />
+  <meta property="og:description" content="Японский бар. Роллы и суши, супы, гриль, саке, японский виски, коктейли и вино." />
   <meta property="og:type" content="website" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏮</text></svg>" />
   <style>
@@ -15,6 +15,7 @@
 
     :root {
       --header-h: 60px;
+      --section-h: 44px;
       --nav-h: 52px;
       --red: #c0392b;
       --red-light: #e74c3c;
@@ -107,9 +108,36 @@
     .search-bar input::placeholder { color: var(--text2); }
     .search-bar input:focus { border-color: var(--gold); }
 
+    /* ── SECTION TABS ── */
+    #sectionTabs {
+      position: sticky; top: var(--header-h); z-index: 99;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(32px);
+      -webkit-backdrop-filter: blur(32px);
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      height: var(--section-h);
+    }
+    .section-tab {
+      flex: 1;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      color: var(--text2);
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .section-tab.active {
+      color: var(--gold-light);
+      border-bottom-color: var(--gold);
+    }
+
     /* ── CATEGORY NAV ── */
     #categoryNav {
-      position: sticky; top: var(--header-h); z-index: 99;
+      position: sticky; top: calc(var(--header-h) + var(--section-h)); z-index: 98;
       background: rgba(10,10,15,0.8);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
@@ -173,6 +201,13 @@
     .item-card:active { background: rgba(201,168,76,0.05); }
     .item-card.hidden { display: none; }
 
+    .item-thumb {
+      width: 84px; height: 84px; border-radius: 14px;
+      object-fit: cover; flex-shrink: 0;
+      border: 1px solid rgba(201,168,76,0.25);
+      background: rgba(255,255,255,0.05);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+    }
     .item-info { flex: 1; min-width: 0; }
     .item-name { font-size: 14px; font-weight: 400; color: var(--text); line-height: 1.35; }
     .item-desc { font-size: 11px; color: var(--gold); opacity: 0.6; line-height: 1.4; margin-top: 2px; font-style: italic; }
@@ -300,6 +335,45 @@
       .cart-drawer.open { transform: translateX(-50%) translateY(0); }
     }
 
+    /* ── LIGHTBOX ── */
+    .item-thumb { cursor: pointer; }
+    .lightbox {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(10,10,15,0.9);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s;
+    }
+    .lightbox.open { opacity: 1; pointer-events: auto; }
+    .lightbox-inner {
+      max-width: 560px; width: 100%; text-align: center;
+      transform: scale(0.95); transition: transform 0.2s;
+    }
+    .lightbox.open .lightbox-inner { transform: scale(1); }
+    .lightbox-img {
+      width: 100%; max-height: 60vh; object-fit: cover;
+      border-radius: 22px;
+      border: 1px solid rgba(201,168,76,0.35);
+      box-shadow: 0 16px 56px rgba(0,0,0,0.65);
+    }
+    .lightbox-name { margin-top: 16px; font-size: 19px; font-weight: 700; color: var(--text); }
+    .lightbox-desc { margin-top: 6px; font-size: 13px; color: var(--gold); opacity: 0.75; font-style: italic; line-height: 1.5; }
+    .lightbox-price {
+      display: inline-block; margin-top: 12px;
+      font-size: 15px; font-weight: 700; color: var(--gold);
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 12px; padding: 6px 16px;
+    }
+    .lightbox-close {
+      position: absolute; top: 18px; right: 18px;
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.3);
+      background: rgba(255,255,255,0.06);
+      color: var(--text); font-size: 18px; cursor: pointer;
+    }
+
     /* ── EMPTY STATE ── */
     .empty-state { display: none; text-align: center; padding: 80px 20px; color: var(--text2); }
     .empty-state.visible { display: block; }
@@ -308,6 +382,9 @@
 
     @media (min-width: 640px) {
       .cat-section { padding: 24px 24px 8px; max-width: 680px; margin: 0 auto; }
+      .item-thumb { width: 104px; height: 104px; border-radius: 16px; }
+      .item-name { font-size: 15px; }
+      .item-desc { font-size: 12px; }
     }
   </style>
 </head>
@@ -339,6 +416,12 @@
   </div>
 </header>
 
+<!-- SECTION TABS -->
+<div id="sectionTabs">
+  <button class="section-tab active" data-section="kitchen">КУХНЯ</button>
+  <button class="section-tab" data-section="bar">БАР</button>
+</div>
+
 <!-- CATEGORY NAV -->
 <nav id="categoryNav"></nav>
 
@@ -349,6 +432,17 @@
     <div class="empty-state-text">Ничего не найдено</div>
   </div>
 </main>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" aria-label="Закрыть">✕</button>
+  <div class="lightbox-inner">
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <div class="lightbox-name" id="lightboxName"></div>
+    <div class="lightbox-desc" id="lightboxDesc"></div>
+    <div class="lightbox-price" id="lightboxPrice"></div>
+  </div>
+</div>
 
 <!-- CART FAB -->
 <button class="cart-fab" id="cartFab" onclick="openCart()">
@@ -385,8 +479,388 @@
 //  MENU DATA
 // ─────────────────────────────
 const menuData = [
+  // ── КУХНЯ ──
   {
-    id: 'wine',
+    id: 'salads', section: 'kitchen',
+    name: 'Салаты', name_kz: 'Салаттар', name_en: 'Salads',
+    items: [
+      { name: 'Греческий', name_kz: 'Грек салаты', name_en: 'Greek Salad', img: 'img/greek.webp', price: 2690 },
+      { name: 'Жареный баклажан с томатами', name_kz: 'Қызанақпен қуырылған баялды', name_en: 'Fried Eggplant with Tomatoes', img: 'img/eggplant.webp', price: 2890 },
+      { name: 'Кацу салат с курицей и овощами', name_kz: 'Тауық кацу салаты', name_en: 'Chicken Katsu Salad', img: 'img/katsu_salad.webp', price: 2790 },
+      { name: 'Руккола с креветками с соусом терияки', name_kz: 'Асшаян қосылған руккола', name_en: 'Arugula & Shrimp with Teriyaki', img: 'img/arugula.webp', price: 3590 },
+      { name: 'Салат с древесными грибами', name_kz: 'Ағаш саңырауқұлақ салаты', name_en: 'Wood Ear Mushroom Salad', img: 'img/wood_mushroom.webp', price: 2890 },
+      { name: 'Салат с телятиной в имбирной заправке', name_kz: 'Зімбір тұздығымен бұзау еті салаты', name_en: 'Veal Salad with Ginger Dressing', img: 'img/veal_ginger.webp', price: 3590 },
+      { name: 'Салат с телятиной и карамельным ананасом', name_kz: 'Карамель ананаспен бұзау еті салаты', name_en: 'Veal Salad with Caramelized Pineapple', img: 'img/veal_pineapple.webp', price: 3990 },
+      { name: 'Салат с тунцом', name_kz: 'Тунец салаты', name_en: 'Tuna Salad', img: 'img/tuna_salad.webp', price: 3490 },
+      { name: 'Салат с угрем', name_kz: 'Жыланбалық салаты', name_en: 'Eel Salad', img: 'img/eel_salad.webp', price: 3390 },
+      { name: 'Свекольный салат с фетой', name_kz: 'Фета қосылған қызылша салаты', name_en: 'Beetroot Salad with Feta', img: 'img/beet_salad.webp', price: 2290 },
+      { name: 'Стейк салат из телятины с артишоками', name_kz: 'Артишок қосылған стейк салат', name_en: 'Veal Steak Salad with Artichokes', img: 'img/steak_salad.webp', price: 4990 },
+      { name: 'Тар тар из лосося', name_kz: 'Лосось тартары', name_en: 'Salmon Tartare', price: 3390 },
+      { name: 'Цезарь с курицей', name_kz: 'Тауық қосылған Цезарь', name_en: 'Chicken Caesar', img: 'img/caesar.webp', price: 2990 },
+    ]
+  },
+  {
+    id: 'cold_appetizers', section: 'kitchen',
+    name: 'Холодные закуски', name_kz: 'Суық тіскебасарлар', name_en: 'Cold Appetizers',
+    items: [
+      { name: 'Малосольное плато', name_kz: 'Тұздалған балық платосы', name_en: 'Lightly Salted Fish Platter', price: 2590 },
+      { name: 'Мясная нарезка', name_kz: 'Ет платосы', name_en: 'Meat Platter', price: 7490 },
+      { name: 'Овощная нарезка', name_kz: 'Көкөніс платосы', name_en: 'Vegetable Platter', price: 4090 },
+      { name: 'Рыбная нарезка', name_kz: 'Балық платосы', name_en: 'Fish Platter', price: 8090 },
+      { name: 'Сырная нарезка', name_kz: 'Ірімшік платосы', name_en: 'Cheese Platter', img: 'img/cheese_plate.webp', price: 5490 },
+      { name: 'Татаки с лососем и авокадо', name_kz: 'Лосось пен авокадо татаки', name_en: 'Salmon Avocado Tataki', desc: 'Лосось в фирменном соусе, хрустящий авокадо, маринованный рис, кисло-сладкий соус и красная икра', price: 2990 },
+      { name: 'Фруктовая нарезка', name_kz: 'Жеміс платосы', name_en: 'Fruit Platter', price: 6590 },
+    ]
+  },
+  {
+    id: 'asian_snacks', section: 'kitchen',
+    name: 'Азиатские закуски', name_kz: 'Азиялық тіскебасарлар', name_en: 'Asian Appetizers',
+    items: [
+      { name: 'Капуста кимчи', name_kz: 'Кимчи қырыққабат', name_en: 'Kimchi Cabbage', price: 590 },
+      { name: 'Кацу сэндвич с курицей', name_kz: 'Тауық еті қосылған кацу сэндвич', name_en: 'Chicken Katsu Sando', img: 'img/katsu_sando.webp', price: 1590 },
+      { name: 'Креветки медовые', name_kz: 'Балды асшаян', name_en: 'Honey Shrimp', img: 'img/honey_shrimp.webp', price: 2290 },
+      { name: 'Креветки том ям', name_kz: 'Том ям асшаяны', name_en: 'Tom Yum Shrimp', img: 'img/tomyum_shrimp.webp', price: 2290 },
+      { name: 'Маринованные огурцы', name_kz: 'Тұздалған қияр', name_en: 'Pickled Cucumbers', img: 'img/pickled_cucumbers.webp', price: 1290 },
+      { name: 'Помидоры кимчи', name_kz: 'Кимчи қызанақ', name_en: 'Kimchi Tomatoes', price: 790 },
+      { name: 'Сет закусок', name_kz: 'Тіскебасар сеті', name_en: 'Appetizer Set', img: 'img/snack_set.webp', price: 2090 },
+      { name: 'Хрустящий кальмар', name_kz: 'Қытырлақ кальмар', name_en: 'Crispy Squid', desc: 'С соусом спайси', img: 'img/crispy_squid.webp', price: 1090 },
+      { name: 'Гедза с курицей', name_kz: 'Тауық гедзасы', name_en: 'Chicken Gyoza', img: 'img/gyoza.webp', price: 1800 },
+      { name: 'Гедза с уткой', name_kz: 'Үйрек гедзасы', name_en: 'Duck Gyoza', img: 'img/gyoza.webp', price: 1990 },
+      { name: 'Гедза с креветками', name_kz: 'Асшаян гедзасы', name_en: 'Shrimp Gyoza', img: 'img/gyoza.webp', price: 2290 },
+    ]
+  },
+  {
+    id: 'hot_appetizers', section: 'kitchen',
+    name: 'Горячие закуски', name_kz: 'Ыстық тіскебасарлар', name_en: 'Hot Appetizers',
+    items: [
+      { name: 'Боул Кацу', name_en: 'Katsu Bowl', price: 2790 },
+      { name: 'Кушияки с осьминогом', name_kz: 'Сегізаяқ кушияки', name_en: 'Octopus Kushiyaki', img: 'img/kushiyaki_octo.webp', price: 5490 },
+      { name: 'Покумпаб с креветками', name_kz: 'Асшаян покумпаб', name_en: 'Shrimp Pokeumbap', desc: 'Корейский жареный рис с овощами, яйцом и обжаренными креветками, кунжутное масло и соевый соус', img: 'img/pokeumbap.webp', price: 2290 },
+      { name: 'Покумпаб с курицей', name_kz: 'Тауық покумпаб', name_en: 'Chicken Pokeumbap', price: 2290 },
+      { name: 'Салат из осьминога с соусом юдзу', name_kz: 'Юдзу тұздығымен сегізаяқ салаты', name_en: 'Octopus Salad with Yuzu Sauce', img: 'img/octopus_salad.webp', price: 4690 },
+      { name: 'Спринг роллы с креветками', name_kz: 'Асшаян спринг ролл', name_en: 'Shrimp Spring Rolls', price: 2590 },
+      { name: 'Спринг роллы с курицей', name_kz: 'Тауық спринг ролл', name_en: 'Chicken Spring Rolls', price: 2590 },
+      { name: 'Трубочки с томленым мясом и сыром', name_kz: 'Ет пен ірімшік қосылған түтікшелер', name_en: 'Slow-Cooked Meat & Cheese Rolls', price: 4590 },
+      { name: 'Хрустящие креветки с апельсином', name_kz: 'Апельсинмен қытырлақ асшаян', name_en: 'Crispy Orange Shrimp', desc: 'Креветки в кляре с фирменным спайси-соусом и свежими кольцами апельсина', img: 'img/crispy_shrimp_orange.webp', price: 2990 },
+      { name: 'Хрустящие крылышки', name_kz: 'Қытырлақ қанаттар', name_en: 'Crispy Wings', img: 'img/wings.webp', price: 3590 },
+      { name: 'Чикен в азиатском соусе с сыром', name_kz: 'Азиялық тұздықтағы тауық еті', name_en: 'Chicken in Asian Sauce with Cheese', price: 2590 },
+      { name: 'Эби динамит', name_en: 'Ebi Dynamite', desc: 'Креветки, соус ким-чи, японский кляр', price: 2990 },
+      { name: 'Эноки жареные', name_kz: 'Қуырылған эноки', name_en: 'Fried Enoki', desc: 'Хрустящие жареные грибы эноки с пикантным острым соусом', img: 'img/enoki_fried.webp', price: 2290 },
+      { name: 'Эноки на воке', name_kz: 'Воктағы эноки', name_en: 'Wok Enoki', desc: 'Тонкие грибочки в остром соусе', img: 'img/enoki_wok.webp', price: 2290 },
+    ]
+  },
+  {
+    id: 'soups', section: 'kitchen',
+    name: 'Супы', name_kz: 'Сорпалар', name_en: 'Soups',
+    items: [
+      { name: 'Кукси', name_en: 'Kuksi', img: 'img/kuksi.webp', price: 2890 },
+      { name: 'Куриный суп детский', name_kz: 'Балаларға арналған тауық сорпасы', name_en: 'Kids Chicken Soup', price: 1890 },
+      { name: 'Лапша по-домашнему', name_kz: 'Үй кеспесі', name_en: 'Homestyle Noodle Soup', price: 1890 },
+      { name: 'Рамен с говядиной', name_kz: 'Сиыр еті рамен', name_en: 'Beef Ramen', price: 2990 },
+      { name: 'Рамен с креветками', name_kz: 'Асшаян рамен', name_en: 'Shrimp Ramen', price: 2990 },
+      { name: 'Рамен с курицей', name_kz: 'Тауық рамен', name_en: 'Chicken Ramen', img: 'img/ramen_chicken.webp', price: 2790 },
+      { name: 'Рамен сливочный с копченой говядиной и курицей', name_kz: 'Кілегейлі рамен', name_en: 'Creamy Ramen with Smoked Beef & Chicken', desc: 'Насыщенный бульон, нежная курица и ароматная копченая говядина на сливочной основе', img: 'img/ramen_creamy.webp', price: 3590 },
+      { name: 'Соте из морепродуктов', name_kz: 'Теңіз өнімдері соте', name_en: 'Seafood Saute', desc: 'Семга, мидии, креветки, осьминоги и вонголе в насыщенном сливочном соусе', img: 'img/seafood_saute.webp', price: 6290 },
+      { name: 'Суп из вон тона', name_kz: 'Вонтон сорпасы', name_en: 'Wonton Soup', img: 'img/wonton_soup.webp', price: 3590 },
+      { name: 'Суп с уткой', name_kz: 'Үйрек сорпасы', name_en: 'Duck Soup', img: 'img/duck_soup.webp', price: 2990 },
+      { name: 'Суп Том-кха', name_en: 'Tom Kha', desc: 'Насыщенный суп с куриным филе, картофелем и шпинатом, пряной пастой том-ям и ароматным сельдереем', img: 'img/tom_kha.webp', price: 2990 },
+      { name: 'Том ям', name_en: 'Tom Yum', desc: 'Тайский суп с пряно-кислым вкусом: креветки, шампиньоны, филе семги, лимонграсс, острый перец и кокосовое молоко', img: 'img/tom_yum.webp', price: 4690 },
+      { name: 'Том ям от Шефа', name_kz: 'Шефтен Том ям', name_en: "Chef's Tom Yum", desc: 'Гребешки, семга, осьминоги и креветки; подается с ароматным рисом', img: 'img/tom_yum_chef.webp', price: 5990 },
+      { name: 'Фо-бо', name_en: 'Pho Bo', desc: 'Лапша фо-бо, говядина, лимонграсс, листья лайма, кинза, имбирь', img: 'img/pho_bo.webp', price: 2890 },
+    ]
+  },
+  {
+    id: 'hot_dishes', section: 'kitchen',
+    name: 'Горячие блюда', name_kz: 'Ыстық тағамдар', name_en: 'Main Dishes',
+    items: [
+      { name: 'Mongolian Beef', desc: 'Вырезка, фирменный соус, маринованный рис, зеленый лук', img: 'img/mongolian.webp', price: 3990 },
+      { name: 'Бульгоги', name_en: 'Bulgogi', img: 'img/bulgogi.webp', price: 5590 },
+      { name: 'Вон-тон с креветками, семгой и стручковой фасолью', name_kz: 'Асшаян, семга және бұршақ қосылған вонтон', name_en: 'Wonton with Shrimp, Salmon & Green Beans', desc: 'Японское тесто, креветки, семга, соус унаги', img: 'img/wonton_shrimp.webp', price: 3890 },
+      { name: 'Вонтон с телятиной и тыквой', name_kz: 'Бұзау еті мен асқабақ вонтоны', name_en: 'Wonton with Veal & Pumpkin', desc: 'Нежное тесто с начинкой из телятины и тыквы на тыквенном пюре с кедровыми орехами, фета-кремом и острым паджан-соусом', img: 'img/wonton_veal.webp', price: 3390 },
+      { name: 'Дорадо в пергаменте', name_kz: 'Пергаменттегі дорадо', name_en: 'Dorado in Parchment', desc: 'Запечённая дорадо с черри, маслинами, чесноком и лаймом; подается с хрустящим хлебом и фирменным японским соусом', img: 'img/dorado_parchment.webp', price: 7190 },
+      { name: 'Жареный рамен с говядиной', name_kz: 'Сиыр етімен қуырылған рамен', name_en: 'Fried Ramen with Beef', desc: 'Сочная говядина с ароматной лапшой, пропитанной фирменным соусом', price: 3890 },
+      { name: 'Жареный рамен с креветками', name_kz: 'Асшаянмен қуырылған рамен', name_en: 'Fried Ramen with Shrimp', desc: 'Креветки, обжаренные до золотистой корочки, с ароматной лапшой и насыщенным соусом', price: 3890 },
+      { name: 'Жареный рамен с курицей', name_kz: 'Тауықпен қуырылған рамен', name_en: 'Fried Ramen with Chicken', img: 'img/fried_ramen_chicken.webp', price: 3390 },
+      { name: 'Креветки в кокосовом кари', name_kz: 'Кокос каридегі асшаян', name_en: 'Shrimp in Coconut Curry', desc: 'Креветки, кокосовое карри, маринованный рис', img: 'img/shrimp_curry.webp', price: 3990 },
+      { name: 'Кунг пао', name_en: 'Kung Pao', img: 'img/kung_pao.webp', price: 3290 },
+      { name: 'Кушияки', name_en: 'Kushiyaki', desc: 'Куриные шашлычки, маринованные огурцы, ким-чи, маринованный рис', img: 'img/kushiyaki.webp', price: 2490 },
+      { name: 'Медальоны в грибном соусе', name_kz: 'Саңырауқұлақ тұздығындағы медальондар', name_en: 'Medallions in Mushroom Sauce', desc: 'Вырезка, картофельное пюре, грибной соус, лук криспи', img: 'img/medallions_mushroom.webp', price: 5490 },
+      { name: 'Медальоны в сырном соусе с овощным рагу', name_kz: 'Ірімшік тұздығындағы медальондар', name_en: 'Medallions in Cheese Sauce with Vegetables', img: 'img/medallions_cheese.webp', price: 5490 },
+      { name: 'Острая жареная курица', name_kz: 'Ащы қуырылған тауық', name_en: 'Spicy Fried Chicken', desc: 'Бедро курицы в панировке с пряным чесноком и зеленым луком', img: 'img/spicy_chicken.webp', price: 3590 },
+      { name: 'Пампушки', name_en: 'Pampushki', desc: 'Тайские пампушки с мясом: сочное мясо и яркие овощи в пряном соевом соусе с кунжутом', img: 'img/pampushki.webp', price: 2890 },
+      { name: 'Поэлья с лангустинами', name_kz: 'Лангустинмен паэлья', name_en: 'Paella with Langoustines', img: 'img/paella.webp', price: 6490 },
+      { name: 'Чикенпай', name_en: 'Chicken Pie', img: 'img/chicken_pie.webp', price: 3490 },
+    ]
+  },
+  {
+    id: 'grill', section: 'kitchen',
+    name: 'Гриль хаус', name_kz: 'Гриль хаус', name_en: 'Grill House',
+    items: [
+      { name: 'Каре баранины', name_kz: 'Қозы каресі', name_en: 'Rack of Lamb', img: 'img/lamb_rack.webp', price: 5990 },
+      { name: 'Пеппер стейк', name_en: 'Pepper Steak', price: 6590 },
+      { name: 'Рибай Cheese из говядины', name_kz: 'Сиыр етінен Рибай Cheese', name_en: 'Beef Ribeye Cheese', desc: 'Стейк из рибая тонкими слайсами с соусом бульгоги и сливочно-сырной заливкой', img: 'img/ribeye_cheese.webp', price: 7490 },
+      { name: 'Рибай Cheese из конины', name_kz: 'Жылқы етінен Рибай Cheese', name_en: 'Horse Meat Ribeye Cheese', desc: 'Стейк из рибая тонкими слайсами с соусом бульгоги и сливочно-сырной заливкой', img: 'img/ribeye_cheese.webp', price: 7490 },
+      { name: 'Рибай стейк из говядины', name_kz: 'Сиыр етінен рибай стейк', name_en: 'Beef Ribeye Steak', price: 5990 },
+      { name: 'Рибай стейк из конины', name_kz: 'Жылқы етінен рибай стейк', name_en: 'Horse Meat Ribeye Steak', price: 5990 },
+      { name: 'Стейк томагавк Самурай', name_kz: 'Томагавк Самурай стейгі', name_en: 'Tomahawk Steak Samurai', img: 'img/tomahawk.webp', price: 10990 },
+      { name: 'Тибон стейк', name_en: 'T-Bone Steak', price: 5990 },
+    ]
+  },
+  {
+    id: 'fish', section: 'kitchen',
+    name: 'Рыба', name_kz: 'Балық', name_en: 'Fish',
+    items: [
+      { name: 'Дорадо на гриле', name_kz: 'Грильдегі дорадо', name_en: 'Grilled Dorado', price: 5890 },
+      { name: 'Семга на гриле', name_kz: 'Грильдегі семга', name_en: 'Grilled Salmon', price: 6490 },
+      { name: 'Сибас на гриле', name_kz: 'Грильдегі сибас', name_en: 'Grilled Sea Bass', price: 5850 },
+      { name: 'Форель на гриле', name_kz: 'Грильдегі форель', name_en: 'Grilled Trout', price: 4990 },
+    ]
+  },
+  {
+    id: 'rice_noodles', section: 'kitchen',
+    name: 'Рис и лапша', name_kz: 'Күріш пен кеспе', name_en: 'Rice & Noodles',
+    items: [
+      { name: 'Соба с говядиной', name_kz: 'Сиыр еті соба', name_en: 'Beef Soba', desc: 'Гречневая лапша, вырезка, овощи', price: 3490 },
+      { name: 'Соба с креветками', name_kz: 'Асшаян соба', name_en: 'Shrimp Soba', desc: 'Гречневая лапша, креветки, овощи', img: 'img/soba_shrimp.webp', price: 3390 },
+      { name: 'Соба с курицей', name_kz: 'Тауық соба', name_en: 'Chicken Soba', desc: 'Гречневая лапша, куриное филе, овощи', img: 'img/soba_chicken.webp', price: 2990 },
+      { name: 'Тяхан с говядиной', name_kz: 'Сиыр еті тяхан', name_en: 'Beef Chahan', desc: 'Рис, овощи, вырезка', img: 'img/chahan_beef.webp', price: 3290 },
+      { name: 'Тяхан с креветками', name_kz: 'Асшаян тяхан', name_en: 'Shrimp Chahan', desc: 'Рис, овощи, креветки', img: 'img/chahan_shrimp.webp', price: 3390 },
+      { name: 'Тяхан с курицей', name_kz: 'Тауық тяхан', name_en: 'Chicken Chahan', desc: 'Рис, овощи, куриное филе', price: 2990 },
+      { name: 'Удон с говядиной', name_kz: 'Сиыр еті удон', name_en: 'Beef Udon', desc: 'Пшеничная лапша, вырезка, овощи', price: 3490 },
+      { name: 'Удон с креветками', name_kz: 'Асшаян удон', name_en: 'Shrimp Udon', desc: 'Пшеничная лапша, креветки, овощи', price: 3390 },
+      { name: 'Удон с курицей', name_kz: 'Тауық удон', name_en: 'Chicken Udon', desc: 'Пшеничная лапша, куриное филе, овощи', img: 'img/udon_chicken.webp', price: 2990 },
+    ]
+  },
+  {
+    id: 'wok', section: 'kitchen',
+    name: 'Вок', name_kz: 'Вок', name_en: 'Wok',
+    items: [
+      { name: 'Жаровня с говядиной', name_kz: 'Сиыр етімен жаровня', name_en: 'Beef Wok', img: 'img/zharovnya_beef.webp', price: 4590 },
+      { name: 'Жаровня с креветками', name_kz: 'Асшаянмен жаровня', name_en: 'Shrimp Wok', img: 'img/zharovnya_shrimp.webp', price: 3490 },
+      { name: 'Жаровня с курицей', name_kz: 'Тауықпен жаровня', name_en: 'Chicken Wok', img: 'img/zharovnya_chicken.webp', price: 2490 },
+    ]
+  },
+  {
+    id: 'sets', section: 'kitchen',
+    name: 'Сеты', name_kz: 'Сеттер', name_en: 'Sets',
+    items: [
+      { name: 'Сет Fudzi', name_kz: 'Fudzi сеті', name_en: 'Fudzi Set', desc: 'Филадельфия, канада, калифорния hot, унаги темпура', price: 10900 },
+      { name: 'Сет Izakaya', name_kz: 'Izakaya сеті', name_en: 'Izakaya Set', desc: 'Филадельфия, канада, калифорния, ясай, радуга, сяке маки, унаги темпура, чиз эби, мураками, каппа маки, унаги маки, эби маки, сяке нигири, унаги нигири', price: 26990 },
+      { name: 'Сет запеченный', name_kz: 'Пісірілген сет', name_en: 'Baked Set', desc: 'Филадельфия хот 8 шт, кунжут хот 8 шт, калифорния хот 8 шт, цезарь хот 8 шт', img: 'img/set_baked.webp', price: 11900 },
+      { name: 'Сет на двоих', name_kz: 'Екі адамға сет', name_en: 'Set for Two', desc: 'Филадельфия классик 8 шт, сяке темпура 8 шт, каппа маки 8 шт, сяке маки 8 шт', img: 'img/set_for_two.webp', price: 9590 },
+      { name: 'Сет острый', name_kz: 'Ащы сет', name_en: 'Spicy Set', desc: 'Острый тунец ролл, острый лосось ролл, гунканы: тунец, сёмга, угорь, креветка', img: 'img/set_spicy.webp', price: 9590 },
+      { name: 'Сет Сакура', name_kz: 'Сакура сеті', name_en: 'Sakura Set', desc: 'Бонито, калифорния, филадельфия, америка, эби темпура', price: 12900 },
+      { name: 'Суши сет от шефа', name_kz: 'Шефтен суши сет', name_en: "Chef's Sushi Set", desc: '8 шт: тунец Bigeye, опаленный сибас, лосось, гребешок, авокадо, угорь, креветка, фаланга краба', img: 'img/chef_sushi_set.webp', price: 6500 },
+    ]
+  },
+  {
+    id: 'rolls', section: 'kitchen',
+    name: 'Роллы', name_kz: 'Роллдар', name_en: 'Rolls',
+    items: [
+      { name: 'Бонито роллы', name_en: 'Bonito Roll', desc: 'Угорь, огурец, сливочный сыр, стружка тунца', img: 'img/roll_bonito.webp', price: 2490 },
+      { name: 'Вегетарианский ролл', name_kz: 'Вегетариандық ролл', name_en: 'Vegetarian Roll', desc: 'Обжаренные в темпуре паприка, цукини и лук-порей', img: 'img/roll_veg.webp', price: 1990 },
+      { name: 'Дракон ролл', name_en: 'Dragon Roll', desc: 'Креветки, угорь, огурец, сливочный сыр, унаги соус, жареный лук', img: 'img/roll_dragon.webp', price: 3690 },
+      { name: 'Дуэт роллы', name_en: 'Duet Roll', desc: '4 шт Филадельфия с огурцом, 4 шт Канада с угрем', img: 'img/roll_duet.webp', price: 3590 },
+      { name: 'Калифорния Hot роллы', name_en: 'California Hot Roll', price: 2290 },
+      { name: 'Калифорния роллы', name_en: 'California Roll', desc: 'Краб, авокадо, огурец, тобико', img: 'img/roll_california.webp', price: 2290 },
+      { name: 'Калифорния с лососем роллы', name_kz: 'Лосось қосылған Калифорния', name_en: 'California Salmon Roll', desc: 'Лосось, авокадо, огурец, тобико', img: 'img/roll_cal_salmon.webp', price: 2990 },
+      { name: 'Калифорния с угрем роллы', name_kz: 'Жыланбалық қосылған Калифорния', name_en: 'California Eel Roll', desc: 'Угорь, авокадо, огурец, тобико', img: 'img/roll_cal_eel.webp', price: 3390 },
+      { name: 'Канада роллы', name_en: 'Canada Roll', desc: 'Копченый угорь, лосось, унаги соус', img: 'img/roll_canada.webp', price: 3590 },
+      { name: 'Кунжут Hot роллы', name_kz: 'Күнжіт Hot ролл', name_en: 'Sesame Hot Roll', price: 2490 },
+      { name: 'Мураками роллы', name_en: 'Murakami Roll', price: 2790 },
+      { name: 'Острый лосось роллы', name_kz: 'Ащы лосось ролл', name_en: 'Spicy Salmon Roll', desc: 'Лосось, авокадо, огурец, тобико, спайси соус', img: 'img/roll_spicy_salmon.webp', price: 2890 },
+      { name: 'Острый тунец роллы', name_kz: 'Ащы тунец ролл', name_en: 'Spicy Tuna Roll', desc: 'Тунец, тобико, авокадо, огурец, спайси соус', img: 'img/roll_spicy_tuna.webp', price: 2990 },
+      { name: 'Радуга роллы', name_kz: 'Кемпірқосақ ролл', name_en: 'Rainbow Roll', price: 2290 },
+      { name: 'Филадельфия роллы', name_en: 'Philadelphia Roll', desc: 'Лосось, авокадо, красная икра, огурец, сливочный сыр', img: 'img/roll_philadelphia.webp', price: 3390 },
+      { name: 'Филадельфия с креветкой и соусом манго', name_kz: 'Асшаян және манго тұздығымен Филадельфия', name_en: 'Philadelphia with Shrimp & Mango Sauce', desc: 'Сливочный сыр, лосось, авокадо, огурцы, креветка, соус манго', img: 'img/roll_phil_mango.webp', price: 3890 },
+      { name: 'Филадельфия хот роллы', name_en: 'Philadelphia Hot Roll', desc: 'Лосось, угорь, авокадо, тобико', img: 'img/roll_phil_hot.webp', price: 3590 },
+      { name: 'Цезарь Hot роллы', name_en: 'Caesar Hot Roll', price: 3290 },
+      { name: 'Чиз эби роллы', name_en: 'Cheese Ebi Roll', price: 2190 },
+      { name: 'Чикен дон роллы', name_en: 'Chicken Don Roll', desc: 'Сливочный сыр Cremette, курица, огурец, лук фри, соус унаги, рис, нори', img: 'img/roll_chicken_don.webp', price: 2290 },
+      { name: 'Ролл с креветкой темпура и крабом', name_kz: 'Темпура асшаян және краб ролл', name_en: 'Shrimp Tempura & Crab Roll', img: 'img/roll_tempura_crab.webp', price: 3390 },
+    ]
+  },
+  {
+    id: 'tempura_rolls', section: 'kitchen',
+    name: 'Темпура роллы', name_kz: 'Темпура роллдар', name_en: 'Tempura Rolls',
+    items: [
+      { name: 'Америка темпура', name_en: 'America Tempura', price: 2690 },
+      { name: 'Сакура темпура', name_en: 'Sakura Tempura', desc: 'Сливочный сыр, авокадо, лосось, соус кимчи', img: 'img/sakura_tempura.webp', price: 2690 },
+      { name: 'Унаги темпура', name_en: 'Unagi Tempura', desc: 'Угорь, сливочный сыр, огурец, унаги соус', img: 'img/unagi_tempura.webp', price: 3290 },
+      { name: 'Эби темпура', name_en: 'Ebi Tempura', desc: 'Креветки, огурец, спайси соус, тобико, сливочный сыр', img: 'img/ebi_tempura.webp', price: 3290 },
+    ]
+  },
+  {
+    id: 'warm_rolls', section: 'kitchen',
+    name: 'Теплые роллы', name_kz: 'Жылы роллдар', name_en: 'Baked Rolls',
+    items: [
+      { name: 'Запеченный ролл с крабом', name_kz: 'Краб қосылған пісірілген ролл', name_en: 'Baked Crab Roll', desc: 'Краб, авокадо, сырный соус', img: 'img/baked_crab_roll.webp', price: 1790 },
+      { name: 'Запеченный ролл с лососем', name_kz: 'Лосось қосылған пісірілген ролл', name_en: 'Baked Salmon Roll', desc: 'Лосось, спайси соус, огурец, тобико, сырный соус', img: 'img/baked_salmon_roll.webp', price: 2690 },
+      { name: 'Запеченный ролл с угрем', name_kz: 'Жыланбалық қосылған пісірілген ролл', name_en: 'Baked Eel Roll', desc: 'Угорь, авокадо, унаги соус, лук фри, сырный соус', img: 'img/baked_eel_roll.webp', price: 2890 },
+    ]
+  },
+  {
+    id: 'hosomaki', section: 'kitchen',
+    name: 'Хосомаки', name_kz: 'Хосомаки', name_en: 'Hosomaki',
+    items: [
+      { name: 'Авокадо кунжут маки', name_kz: 'Авокадо күнжіт маки', name_en: 'Avocado Sesame Maki', img: 'img/maki_avocado.webp', price: 1190 },
+      { name: 'Лосось маки', name_en: 'Salmon Maki', img: 'img/maki_salmon.webp', price: 1300 },
+      { name: 'Огурец кунжут маки', name_kz: 'Қияр күнжіт маки', name_en: 'Cucumber Sesame Maki', img: 'img/maki_cucumber.webp', price: 890 },
+      { name: 'Угорь маки', name_kz: 'Жыланбалық маки', name_en: 'Eel Maki', img: 'img/maki_eel.webp', price: 1790 },
+    ]
+  },
+  {
+    id: 'nigiri', section: 'kitchen',
+    name: 'Нигири', name_kz: 'Нигири', name_en: 'Nigiri',
+    subtitle: '1 шт',
+    items: [
+      { name: 'Креветка нигири', name_kz: 'Асшаян нигири', name_en: 'Shrimp Nigiri', img: 'img/nigiri_shrimp.webp', price: 790 },
+      { name: 'Лосось нигири', name_en: 'Salmon Nigiri', img: 'img/nigiri_salmon.webp', price: 790 },
+      { name: 'Тунец нигири', name_en: 'Tuna Nigiri', img: 'img/nigiri_tuna.webp', price: 990 },
+      { name: 'Угорь нигири', name_kz: 'Жыланбалық нигири', name_en: 'Eel Nigiri', img: 'img/nigiri_eel.webp', price: 790 },
+      { name: 'Гребешок нигири', name_kz: 'Гребешок нигири', name_en: 'Scallop Nigiri', img: 'img/nigiri_scallop.webp', price: 1090 },
+      { name: 'Краб нигири', name_en: 'Crab Nigiri', img: 'img/nigiri_crab.webp', price: 690 },
+    ]
+  },
+  {
+    id: 'sashimi', section: 'kitchen',
+    name: 'Сашими', name_kz: 'Сашими', name_en: 'Sashimi',
+    items: [
+      { name: 'Сашими лосось', name_en: 'Salmon Sashimi', img: 'img/sashimi_salmon.webp', price: 1890 },
+      { name: 'Сашими тунец', name_en: 'Tuna Sashimi', img: 'img/sashimi_tuna.webp', price: 1990 },
+      { name: 'Сашими угорь', name_kz: 'Жыланбалық сашими', name_en: 'Eel Sashimi', img: 'img/sashimi_eel.webp', price: 1990 },
+      { name: 'Сашими гребешок', name_en: 'Scallop Sashimi', img: 'img/sashimi_scallop.webp', price: 2200 },
+      { name: 'Сашими краб', name_en: 'Crab Sashimi', img: 'img/sashimi_crab.webp', price: 2200 },
+    ]
+  },
+  {
+    id: 'bento', section: 'kitchen',
+    name: 'Бенто', name_kz: 'Бенто', name_en: 'Bento',
+    items: [
+      { name: 'Бенто ланч 1', name_en: 'Bento Lunch 1', price: 3490 },
+      { name: 'Бенто ланч 2', name_en: 'Bento Lunch 2', price: 3490 },
+      { name: 'Бенто ланч 3', name_en: 'Bento Lunch 3', price: 3490 },
+    ]
+  },
+  {
+    id: 'garnish', section: 'kitchen',
+    name: 'Гарниры', name_kz: 'Гарнирлер', name_en: 'Side Dishes',
+    items: [
+      { name: 'Картофель фри', name_kz: 'Фри картобы', name_en: 'French Fries', price: 990 },
+      { name: 'Картофельные дольки', name_kz: 'Картоп бөліктері', name_en: 'Potato Wedges', price: 990 },
+      { name: 'Овощи на гриле', name_kz: 'Грильдегі көкөністер', name_en: 'Grilled Vegetables', price: 1490 },
+      { name: 'Пюре картофельное', name_kz: 'Картоп пюресі', name_en: 'Mashed Potatoes', price: 790 },
+      { name: 'Рис', name_kz: 'Күріш', name_en: 'Rice', price: 790 },
+    ]
+  },
+  {
+    id: 'bakery', section: 'kitchen',
+    name: 'Выпечка', name_kz: 'Нан өнімдері', name_en: 'Bakery',
+    items: [
+      { name: 'Хлебная корзина', name_kz: 'Нан себеті', name_en: 'Bread Basket', img: 'img/bread_basket.webp', price: 1290 },
+      { name: 'Хлебная корзина 0,5', name_kz: 'Нан себеті 0,5', name_en: 'Bread Basket ½', price: 490 },
+      { name: 'Чесночный хлеб', name_kz: 'Сарымсақ наны', name_en: 'Garlic Bread', price: 890 },
+    ]
+  },
+  {
+    id: 'kids', section: 'kitchen',
+    name: 'Детское меню', name_kz: 'Балалар мәзірі', name_en: 'Kids Menu',
+    items: [
+      { name: 'Картофельно-сырные шарики', name_kz: 'Картоп-ірімшік шариктері', name_en: 'Potato Cheese Balls', price: 900 },
+      { name: 'Клаб сендвич с курицей', name_kz: 'Тауық клаб-сэндвич', name_en: 'Chicken Club Sandwich', price: 1200 },
+      { name: 'Котлета говяжья с пюре', name_kz: 'Пюремен сиыр котлеті', name_en: 'Beef Cutlet with Mash', price: 2590 },
+      { name: 'Котлета говяжья с рисом', name_kz: 'Күрішпен сиыр котлеті', name_en: 'Beef Cutlet with Rice', price: 2590 },
+      { name: 'Куриные котлеты с пюре', name_kz: 'Пюремен тауық котлеті', name_en: 'Chicken Cutlets with Mash', price: 1590 },
+      { name: 'Куриные котлеты с рисом', name_kz: 'Күрішпен тауық котлеті', name_en: 'Chicken Cutlets with Rice', price: 1590 },
+      { name: 'Наггетсы', name_kz: 'Наггетс', name_en: 'Nuggets', price: 1200 },
+      { name: 'Паста с куриным филе', name_kz: 'Тауық етті паста', name_en: 'Pasta with Chicken', price: 1390 },
+    ]
+  },
+  {
+    id: 'desserts', section: 'kitchen',
+    name: 'Десерты', name_kz: 'Десерттер', name_en: 'Desserts',
+    items: [
+      { name: 'Авторский тирамису', name_kz: 'Авторлық тирамису', name_en: 'Signature Tiramisu', img: 'img/tiramisu.webp', price: 2890 },
+      { name: 'Банановый торт', name_kz: 'Банан торты', name_en: 'Banana Cake', img: 'img/banana_cake.webp', price: 2090 },
+      { name: 'Брауни', name_en: 'Brownie', img: 'img/brownie.webp', price: 1990 },
+      { name: 'Десерт Павлова с черничным кремом', name_kz: 'Көкжидек кремді Павлова', name_en: 'Pavlova with Blueberry Cream', img: 'img/pavlova.webp', price: 2490 },
+      { name: 'Каскад клубничный', name_kz: 'Құлпынай каскады', name_en: 'Strawberry Cascade', img: 'img/cascade_strawberry.webp', price: 3290 },
+      { name: 'Каскад фисташковый', name_kz: 'Піста каскады', name_en: 'Pistachio Cascade', price: 3290 },
+      { name: 'Медовик', name_kz: 'Бал торты', name_en: 'Honey Cake', price: 2390 },
+      { name: 'Мороженое с шоколадом и грецким орехом', name_kz: 'Шоколад пен жаңғақ қосылған балмұздақ', name_en: 'Ice Cream with Chocolate & Walnuts', price: 1990 },
+      { name: 'Моти', name_en: 'Mochi', price: 1790 },
+      { name: 'Наполеон', name_en: 'Napoleon', img: 'img/napoleon.webp', price: 2090 },
+      { name: 'Фисташковый рулет', name_kz: 'Піста рулеті', name_en: 'Pistachio Roll', price: 2990 },
+      { name: 'Фисташковый торт с малиной', name_kz: 'Таңқурай қосылған піста торты', name_en: 'Pistachio Raspberry Cake', img: 'img/pistachio_cake.webp', price: 2590 },
+      { name: 'Чизкейк испанский', name_kz: 'Испан чизкейгі', name_en: 'Basque Cheesecake', price: 2590 },
+      { name: 'Чизкейк Орео', name_kz: 'Орео чизкейгі', name_en: 'Oreo Cheesecake', img: 'img/oreo_cheesecake.webp', price: 2590 },
+      { name: 'Японский чизкейк', name_kz: 'Жапон чизкейгі', name_en: 'Japanese Cheesecake', img: 'img/japan_cheesecake.webp', price: 1590 },
+    ]
+  },
+  {
+    id: 'tea_add', section: 'kitchen',
+    name: 'К чаю', name_kz: 'Шайға қосымша', name_en: 'For Tea',
+    items: [
+      { name: 'Лимон', name_kz: 'Лимон', name_en: 'Lemon', price: 600 },
+      { name: 'Мед', name_kz: 'Бал', name_en: 'Honey', price: 600 },
+      { name: 'Молоко', name_kz: 'Сүт', name_en: 'Milk', price: 600 },
+      { name: 'Шоколад', name_kz: 'Шоколад', name_en: 'Chocolate', price: 1890 },
+    ]
+  },
+  {
+    id: 'beer_snacks', section: 'kitchen',
+    name: 'Закуски к пиву', name_kz: 'Сыраға тіскебасар', name_en: 'Beer Snacks',
+    items: [
+      { name: 'Арахис', name_kz: 'Жержаңғақ', name_en: 'Peanuts', price: 690 },
+      { name: 'Курт', name_kz: 'Құрт', name_en: 'Kurt', price: 790 },
+      { name: 'Фисташки', name_kz: 'Піста', name_en: 'Pistachios', price: 1290 },
+      { name: 'Чечил', name_kz: 'Шешіл ірімшігі', name_en: 'Chechil Cheese', price: 990 },
+      { name: 'Чипсы Pringles', name_en: 'Pringles', price: 990 },
+    ]
+  },
+  {
+    id: 'sauces', section: 'kitchen',
+    name: 'Соусы', name_kz: 'Тұздықтар', name_en: 'Sauces',
+    items: [
+      { name: 'Барбекю', name_en: 'BBQ', price: 390 },
+      { name: 'Кетчуп', name_en: 'Ketchup', price: 490 },
+      { name: 'Свит чили', name_en: 'Sweet Chili', price: 490 },
+      { name: 'Соя', name_kz: 'Соя тұздығы', name_en: 'Soy Sauce', price: 290 },
+      { name: 'Спайси соус', name_en: 'Spicy Sauce', price: 490 },
+      { name: 'Сырный соус', name_kz: 'Ірімшік тұздығы', name_en: 'Cheese Sauce', price: 490 },
+      { name: 'Тар-тар', name_en: 'Tartar Sauce', price: 490 },
+    ]
+  },
+  {
+    id: 'extras', section: 'kitchen',
+    name: 'Допы', name_kz: 'Қосымшалар', name_en: 'Extras',
+    items: [
+      { name: 'Банан', name_kz: 'Банан', name_en: 'Banana', price: 390 },
+      { name: 'Васаби 50 г', name_en: 'Wasabi 50g', price: 500 },
+      { name: 'Имбирь маринованный 50 г', name_kz: 'Тұздалған зімбір 50 г', name_en: 'Pickled Ginger 50g', price: 500 },
+      { name: 'Куриное филе 50 г', name_kz: 'Тауық филесі 50 г', name_en: 'Chicken Fillet 50g', price: 500 },
+      { name: 'Огурцы 100 г', name_kz: 'Қияр 100 г', name_en: 'Cucumbers 100g', price: 500 },
+      { name: 'Пармезан 100 г', name_en: 'Parmesan 100g', price: 2000 },
+      { name: 'Перец чили 25 г', name_kz: 'Чили бұрышы 25 г', name_en: 'Chili Pepper 25g', price: 500 },
+      { name: 'Помидор 100 г', name_kz: 'Қызанақ 100 г', name_en: 'Tomato 100g', price: 500 },
+      { name: 'Шрирача 50 г', name_en: 'Sriracha 50g', price: 600 },
+      { name: 'Ягоды сезонные', name_kz: 'Маусымдық жидектер', name_en: 'Seasonal Berries', price: 990 },
+    ]
+  },
+  {
+    id: 'banquet', section: 'kitchen',
+    name: 'Банкетные блюда', name_kz: 'Банкет тағамдары', name_en: 'Banquet Dishes',
+    items: [
+      { name: 'Банкетное блюдо Izakaya', name_kz: 'Izakaya банкет тағамы', name_en: 'Izakaya Banquet Platter', desc: 'Баранья рулька и каре ягненка, мини-шашлычки из курицы и говядины, запечённые овощи и тыква, баклажаны, греческий салат, французский багет и фирменные соусы', price: 37990 },
+      { name: 'Гриль микс мясной', name_kz: 'Ет гриль миксі', name_en: 'Meat Grill Mix', desc: 'Сочная курица, томленая баранья рулька, стейки рибай и тибон, гриль-овощи, картофельные дольки, костный мозг, цыплёнок табака, французский багет, соус деми-глас', img: 'img/meat_grill_mix.webp', price: 34990 },
+      { name: 'Жареный рис с морепродуктами', name_kz: 'Теңіз өнімдерімен қуырылған күріш', name_en: 'Fried Rice with Seafood', img: 'img/fried_rice_seafood.webp', price: 20990 },
+      { name: 'Куырдак с говядиной', name_kz: 'Сиыр етінен қуырдақ', name_en: 'Beef Kuyrdak', price: 37990 },
+      { name: 'Рыбный гриль микс', name_kz: 'Балық гриль миксі', name_en: 'Fish Grill Mix', desc: 'Дорадо, сибас, форель, семга, креветки, картофельные дольки, овощи на гриле', img: 'img/fish_grill_mix.webp', price: 33390 },
+    ]
+  },
+  // ── БАР ──
+  {
+    id: 'wine', section: 'bar',
     name: 'Вино', name_kz: 'Шарап', name_en: 'Wine',
     subtitle: '750ml',
     items: [
@@ -401,7 +875,7 @@ const menuData = [
     ]
   },
   {
-    id: 'wine_glass',
+    id: 'wine_glass', section: 'bar',
     name: 'Вино по бокалам', name_kz: 'Бокалмен шарап', name_en: 'Wine by glass',
     subtitle: '150ml',
     items: [
@@ -412,7 +886,7 @@ const menuData = [
     ]
   },
   {
-    id: 'sparkling',
+    id: 'sparkling', section: 'bar',
     name: 'Игристые вина', name_kz: 'Көпіршікті шараптар', name_en: 'Sparkling wines',
     subtitle: '750ml',
     items: [
@@ -425,7 +899,7 @@ const menuData = [
     ]
   },
   {
-    id: 'beer',
+    id: 'beer', section: 'bar',
     name: 'Пиво бутылочное', name_kz: 'Бөтелке сыра', name_en: 'Bottled beer',
     subtitle: '330ml',
     items: [
@@ -440,7 +914,7 @@ const menuData = [
     ]
   },
   {
-    id: 'cocktails_na',
+    id: 'cocktails_na', section: 'bar',
     name: 'Безалкогольные коктейли', name_kz: 'Алкогольсыз коктейлдер', name_en: 'Non-alcoholic cocktails',
     items: [
       { name: 'Tequila Sunrise', price: 1090 },
@@ -456,7 +930,7 @@ const menuData = [
     ]
   },
   {
-    id: 'cocktails',
+    id: 'cocktails', section: 'bar',
     name: 'Алкогольные коктейли', name_kz: 'Алкогольдік коктейлдер', name_en: 'Alcoholic cocktails',
     items: [
       { name: 'Aperol Spritz', price: 3290 },
@@ -481,7 +955,7 @@ const menuData = [
     ]
   },
   {
-    id: 'shots',
+    id: 'shots', section: 'bar',
     name: 'Шоты', name_kz: 'Шоттар', name_en: 'Shots',
     items: [
       { name: 'B-52', price: 2290 },
@@ -493,7 +967,7 @@ const menuData = [
     ]
   },
   {
-    id: 'sake',
+    id: 'sake', section: 'bar',
     name: 'Саке Япония', name_kz: 'Жапония сакесі', name_en: 'Japanese Sake',
     subtitle: '150ml',
     items: [
@@ -505,7 +979,7 @@ const menuData = [
     ]
   },
   {
-    id: 'whisky_japan',
+    id: 'whisky_japan', section: 'bar',
     name: 'Виски Япония', name_kz: 'Жапония вискісі', name_en: 'Japanese Whisky',
     subtitle: '50ml',
     items: [
@@ -514,7 +988,7 @@ const menuData = [
     ]
   },
   {
-    id: 'whisky_single',
+    id: 'whisky_single', section: 'bar',
     name: 'Односолодовый виски', name_kz: 'Бір солодты виски', name_en: 'Single Malt Whisky',
     subtitle: '50ml',
     items: [
@@ -525,7 +999,7 @@ const menuData = [
     ]
   },
   {
-    id: 'whisky_scotch',
+    id: 'whisky_scotch', section: 'bar',
     name: 'Шотландский виски', name_kz: 'Шотландия вискісі', name_en: 'Scotch Whisky',
     subtitle: '50ml',
     items: [
@@ -542,7 +1016,7 @@ const menuData = [
     ]
   },
   {
-    id: 'jameson',
+    id: 'jameson', section: 'bar',
     name: 'Jameson Family', name_kz: 'Jameson Family', name_en: 'Jameson Family',
     subtitle: '50ml',
     items: [
@@ -553,7 +1027,7 @@ const menuData = [
     ]
   },
   {
-    id: 'bourbon',
+    id: 'bourbon', section: 'bar',
     name: 'Бурбон', name_kz: 'Бурбон', name_en: 'Bourbon',
     subtitle: '50ml',
     items: [
@@ -561,7 +1035,7 @@ const menuData = [
     ]
   },
   {
-    id: 'cognac_fr',
+    id: 'cognac_fr', section: 'bar',
     name: 'Французский коньяк', name_kz: 'Француз коньягы', name_en: 'French Cognac',
     subtitle: '50ml',
     items: [
@@ -572,7 +1046,7 @@ const menuData = [
     ]
   },
   {
-    id: 'cognac_arm',
+    id: 'cognac_arm', section: 'bar',
     name: 'Армянский коньяк', name_kz: 'Армян коньягы', name_en: 'Armenian Cognac',
     subtitle: '50ml',
     items: [
@@ -583,7 +1057,7 @@ const menuData = [
     ]
   },
   {
-    id: 'vermouth',
+    id: 'vermouth', section: 'bar',
     name: 'Вермуты', name_kz: 'Вермуттар', name_en: 'Vermouths',
     subtitle: '100ml',
     items: [
@@ -594,7 +1068,7 @@ const menuData = [
     ]
   },
   {
-    id: 'vodka',
+    id: 'vodka', section: 'bar',
     name: 'Водка', name_kz: 'Арақ', name_en: 'Vodka',
     subtitle: '50ml',
     items: [
@@ -608,7 +1082,7 @@ const menuData = [
     ]
   },
   {
-    id: 'tequila',
+    id: 'tequila', section: 'bar',
     name: 'Текила', name_kz: 'Текила', name_en: 'Tequila',
     subtitle: '50ml',
     items: [
@@ -619,7 +1093,7 @@ const menuData = [
     ]
   },
   {
-    id: 'rum_cuba',
+    id: 'rum_cuba', section: 'bar',
     name: 'Кубинский ром', name_kz: 'Куба ромы', name_en: 'Cuban Rum',
     subtitle: '50ml',
     items: [
@@ -630,7 +1104,7 @@ const menuData = [
     ]
   },
   {
-    id: 'rum_pr',
+    id: 'rum_pr', section: 'bar',
     name: 'Ром Пуэрто-Рико', name_kz: 'Пуэрто-Рико ромы', name_en: 'Puerto Rico Rum',
     subtitle: '50ml',
     items: [
@@ -641,7 +1115,7 @@ const menuData = [
     ]
   },
   {
-    id: 'liqueurs',
+    id: 'liqueurs', section: 'bar',
     name: 'Настойки и ликёры', name_kz: 'Настойка мен ликёрлар', name_en: 'Liqueurs',
     subtitle: '50ml',
     items: [
@@ -660,7 +1134,7 @@ const menuData = [
     ]
   },
   {
-    id: 'gin',
+    id: 'gin', section: 'bar',
     name: 'Джин', name_kz: 'Джин', name_en: 'Gin',
     subtitle: '50ml',
     items: [
@@ -671,7 +1145,7 @@ const menuData = [
     ]
   },
   {
-    id: 'tea',
+    id: 'tea', section: 'bar',
     name: 'Чайная коллекция', name_kz: 'Шай коллекциясы', name_en: 'Tea collection',
     items: [
       { name: 'Пуэр Вишня-Корица', name_kz: 'Пуэр Шие-Дарчын', name_en: 'Puer Cherry-Cinnamon', price: 1390 },
@@ -690,7 +1164,7 @@ const menuData = [
     ]
   },
   {
-    id: 'coffee',
+    id: 'coffee', section: 'bar',
     name: 'Кофе', name_kz: 'Кофе', name_en: 'Coffee',
     items: [
       { name: 'Double Espresso', price: 990 },
@@ -705,7 +1179,7 @@ const menuData = [
     ]
   },
   {
-    id: 'lemonades',
+    id: 'lemonades', section: 'bar',
     name: 'Лимонады', name_kz: 'Лимонадтар', name_en: 'Lemonades',
     items: [
       { name: 'Клубника Огурец', name_kz: 'Құлпынай Қияр', name_en: 'Strawberry Cucumber', price: 2590 },
@@ -721,7 +1195,7 @@ const menuData = [
     ]
   },
   {
-    id: 'cold_drinks',
+    id: 'cold_drinks', section: 'bar',
     name: 'Холодные напитки', name_kz: 'Суық сусындар', name_en: 'Cold drinks',
     items: [
       { name: 'Coca-Cola / Fanta / Sprite', name_kz: 'Coca-Cola / Fanta / Sprite', name_en: 'Coca-Cola / Fanta / Sprite', desc: '0,25л', price: 990 },
@@ -734,7 +1208,7 @@ const menuData = [
     ]
   },
   {
-    id: 'milkshakes',
+    id: 'milkshakes', section: 'bar',
     name: 'Милкшейки', name_kz: 'Милкшейктер', name_en: 'Milkshakes',
     items: [
       { name: 'Банановый', name_kz: 'Бананды', name_en: 'Banana', price: 2290 },
@@ -744,7 +1218,7 @@ const menuData = [
     ]
   },
   {
-    id: 'fresh',
+    id: 'fresh', section: 'bar',
     name: 'Фреш', name_kz: 'Фреш', name_en: 'Fresh juice',
     items: [
       { name: 'Апельсиновый', name_kz: 'Апельсинді', name_en: 'Orange', price: 2490 },
@@ -753,7 +1227,7 @@ const menuData = [
     ]
   },
   {
-    id: 'cigarettes',
+    id: 'cigarettes', section: 'bar',
     name: 'Сигареты', name_kz: 'Темекі', name_en: 'Cigarettes',
     items: [
       { name: 'Dunhill', price: 1990 },
@@ -773,8 +1247,14 @@ const menuData = [
 const WHATSAPP_PHONE = '7XXXXXXXXXX'; // номер заведения для заказов, формат: 7701XXXXXXX
 
 let currentLang = localStorage.getItem('izakaya_lang') || 'ru';
+let currentSection = 'kitchen';
 let searchQuery = '';
 let cart = loadCart();
+
+const SECTION_LABELS = {
+  kitchen: { ru: 'КУХНЯ', kz: 'АС ҮЙІ', en: 'KITCHEN' },
+  bar: { ru: 'БАР', kz: 'БАР', en: 'BAR' },
+};
 
 function loadCart() {
   try { return JSON.parse(localStorage.getItem('izakaya_cart')) || []; } catch (e) { return []; }
@@ -791,6 +1271,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderMenu();
   initSearch();
   initLang();
+  initSectionTabs();
   initScrollSpy();
   initCart();
   syncLangUI();
@@ -819,7 +1300,8 @@ function formatPrice(price) {
 // ─────────────────────────────
 function buildCategoryNav() {
   const nav = document.getElementById('categoryNav');
-  menuData.forEach((cat, i) => {
+  nav.innerHTML = '';
+  menuData.filter(c => c.section === currentSection).forEach((cat, i) => {
     const btn = document.createElement('button');
     btn.className = 'cat-btn' + (i === 0 ? ' active' : '');
     btn.textContent = getCatName(cat);
@@ -829,10 +1311,36 @@ function buildCategoryNav() {
   });
 }
 
+// ─────────────────────────────
+//  SECTION TABS (Кухня / Бар)
+// ─────────────────────────────
+function initSectionTabs() {
+  document.querySelectorAll('.section-tab').forEach(btn => {
+    btn.addEventListener('click', () => switchSection(btn.dataset.section));
+  });
+}
+
+function switchSection(section) {
+  if (section === currentSection) return;
+  currentSection = section;
+  document.querySelectorAll('.section-tab').forEach(b =>
+    b.classList.toggle('active', b.dataset.section === section));
+  buildCategoryNav();
+  renderMenu();
+  window.scrollTo({ top: 0 });
+}
+
+function syncSectionLabels() {
+  document.querySelectorAll('.section-tab').forEach(b => {
+    const l = SECTION_LABELS[b.dataset.section];
+    b.textContent = l[currentLang] || l.ru;
+  });
+}
+
 function scrollToCategory(id) {
   const el = document.getElementById('cat-' + id);
   if (!el) return;
-  const top = el.getBoundingClientRect().top + window.scrollY - 60 - 52 - 12;
+  const top = el.getBoundingClientRect().top + window.scrollY - 60 - 44 - 52 - 12;
   window.scrollTo({ top, behavior: 'smooth' });
 }
 
@@ -843,8 +1351,10 @@ function buildCategoryNavLabels() {
   });
 }
 
+let spyObserver = null;
+
 function initScrollSpy() {
-  const observer = new IntersectionObserver((entries) => {
+  spyObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const id = entry.target.id.replace('cat-', '');
@@ -854,10 +1364,16 @@ function initScrollSpy() {
       }
     });
   }, { rootMargin: '-100px 0px -60% 0px' });
+  observeSections();
+}
 
-  menuData.forEach(cat => {
+// Секции пересоздаются на каждый renderMenu — переподписываем наблюдатель
+function observeSections() {
+  if (!spyObserver) return;
+  spyObserver.disconnect();
+  menuData.filter(c => c.section === currentSection).forEach(cat => {
     const el = document.getElementById('cat-' + cat.id);
-    if (el) observer.observe(el);
+    if (el) spyObserver.observe(el);
   });
 }
 
@@ -870,7 +1386,7 @@ function renderMenu() {
   let totalVisible = 0;
   main.querySelectorAll('.cat-section').forEach(el => el.remove());
 
-  menuData.forEach(cat => {
+  menuData.filter(c => c.section === currentSection).forEach(cat => {
     const items = cat.items.map((item, idx) => ({ item, idx })).filter(({ item }) => matchesSearch(item));
     const section = document.createElement('div');
     section.className = 'cat-section' + (items.length === 0 ? ' hidden' : '');
@@ -903,6 +1419,7 @@ function renderMenu() {
           <button class="add-btn${inCart ? ' in-cart' : ''}" data-key="${key}" data-name="${item.name}" data-cat="${cat.name}" data-price="${item.price}">+</button>
         </div>`;
       card.innerHTML = `
+        ${item.img ? `<img class="item-thumb" src="${item.img}" alt="${item.name}" loading="lazy" data-cat-id="${cat.id}" data-idx="${idx}">` : ''}
         <div class="item-info">
           <div class="item-name">${getItemName(item)}</div>
           ${item.desc ? `<div class="item-desc">${item.desc}</div>` : ''}
@@ -916,6 +1433,7 @@ function renderMenu() {
   });
 
   emptyState.classList.toggle('visible', totalVisible === 0);
+  observeSections();
 }
 
 function matchesSearch(item) {
@@ -961,6 +1479,7 @@ function syncLangUI() {
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
   document.getElementById('searchInput').placeholder =
     currentLang === 'en' ? 'Search menu...' : currentLang === 'kz' ? 'Мәзірден іздеу...' : 'Поиск по меню...';
+  syncSectionLabels();
 }
 
 // ─────────────────────────────
@@ -1030,8 +1549,31 @@ function closeCart() { document.getElementById('cartOverlay').classList.remove('
 function initCart() {
   document.getElementById('mainContent').addEventListener('click', (e) => {
     const addBtn = e.target.closest('.add-btn');
-    if (addBtn) addToCart(addBtn.dataset.key, addBtn.dataset.name, Number(addBtn.dataset.price), addBtn.dataset.cat);
+    if (addBtn) { addToCart(addBtn.dataset.key, addBtn.dataset.name, Number(addBtn.dataset.price), addBtn.dataset.cat); return; }
+    const thumb = e.target.closest('.item-thumb');
+    if (thumb) {
+      const cat = menuData.find(c => c.id === thumb.dataset.catId);
+      const item = cat && cat.items[thumb.dataset.idx];
+      if (item) openLightbox(item);
+    }
   });
+}
+
+// ─────────────────────────────
+//  LIGHTBOX (просмотр фото)
+// ─────────────────────────────
+function openLightbox(item) {
+  const img = document.getElementById('lightboxImg');
+  img.src = item.img; img.alt = item.name;
+  document.getElementById('lightboxName').textContent = getItemName(item);
+  const desc = document.getElementById('lightboxDesc');
+  desc.textContent = item.desc || '';
+  desc.style.display = item.desc ? '' : 'none';
+  document.getElementById('lightboxPrice').textContent = formatPrice(item.price);
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
 }
 </script>
 </body>
